@@ -1,4 +1,4 @@
-﻿La génération a démarré 31/05/2012 21:21:40.
+﻿La génération a démarré 03/06/2012 20:12:38.
      1>Projet "C:\Users\khadre\documents\visual studio 2010\Projects\projetLO21\projetLO21\projetLO21.vcxproj" sur le nœud 2 (build cible(s)).
      1>InitializeBuildStatus:
          Création de "Debug\projetLO21.unsuccessfulbuild", car "AlwaysCreate" a été spécifié.
@@ -8,6 +8,7 @@
          Toutes les sorties sont à jour.
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\khadre\documents\visual studio 2010\Projects\projetLO21\Debug\projetLO21.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\projetLO21.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\khadre\documents\visual studio 2010\Projects\projetLO21\Debug\projetLO21.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\khadre\documents\visual studio 2010\Projects\projetLO21\Debug\projetLO21.lib" /MACHINE:X86 Debug\projetLO21.exe.embed.manifest.res
+         Debug\expression.obj
          Debug\main.obj
          Debug\nombre.obj
        Manifest:
@@ -23,4 +24,4 @@
 
 La génération a réussi.
 
-Temps écoulé 00:00:00.64
+Temps écoulé 00:00:00.81

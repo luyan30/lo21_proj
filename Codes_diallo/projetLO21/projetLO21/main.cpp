@@ -1,15 +1,20 @@
 #include "nombre.h"
 #include <iostream>
 #include <math.h>
+#include "expression.h"
 
 using namespace std;
 //pour initialiser un float, mettre un point "."
 int main ()
 {
-	int b(5);
-	float c;
-	c=(float)b/10;
-	cout << "c = " << c << endl; 
+	float b(5);
+	float c(6);
+	//c=(float)b/10;
+	Complexe n1(b,c);
+	Complexe n2(c,b);
+	n1.afficher();
+	n2.afficher();
+
 	/*float a(10.10);
 	a/=0.5;
 	/*a = a / 5;
