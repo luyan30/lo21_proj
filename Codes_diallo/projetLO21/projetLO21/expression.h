@@ -27,8 +27,8 @@ class Nombre: public Expression
 	protected: // pour que les méthodes des classes filles puissent y accéder
 
 	// ATTRIBUTS 
-		float m_partieReelle;
-		float m_partieImaginaire;
+		double m_partieReelle;
+		double m_partieImaginaire;
 		int m_denominateurReel;
 		int m_denominateurImaginaire;
 		std::string m_mode;
@@ -38,13 +38,13 @@ class Nombre: public Expression
 
 	// CONSTRUCTEURS
 
-	//Nombre(float partieReelle=0, int denominateurReel=0, float partieImaginaire=1, int denominateurImaginaire=0, std::string mode="complexe"); // construction de n'importe quel nombre ?
+	//Nombre(double partieReelle=0, int denominateurReel=0, double partieImaginaire=1, int denominateurImaginaire=0, std::string mode="complexe"); // construction de n'importe quel nombre ?
 
 	/*construction d'un complexe*/ 
-	Nombre(float partieReelle, float partieImaginaire);
+	Nombre(double partieReelle, double partieImaginaire);
 
 	/*construction d'un réel*/ 
-	Nombre(float valeur);
+	Nombre(double valeur);
 
 	/*construction d'un rationnel*/ 
 	Nombre(int numerateur, int denominateur);
@@ -64,15 +64,15 @@ class Nombre: public Expression
 		//*optionnel virtual const Nombre& evaluer() const = 0; /*{ return *this; }*/  // méthode virtuelle de Expression . On a 2 const car passage par référence + méthode const
 	
 	// ACCESSEURS 
-		float getPartieReelle() const { return m_partieReelle; } 
-		float getPartieImaginaire() const { return m_partieImaginaire; }
+		double getPartieReelle() const { return m_partieReelle; } 
+		double getPartieImaginaire() const { return m_partieImaginaire; }
 		int getDenominateurReel() const { return m_denominateurReel; }
 		int getDenominateurImaginaire() const { return m_denominateurImaginaire;}
 		std::string getMode() const { return m_mode; }
 	
 	// SETTEURS (MODIFICATEURS)
-		void setPartieReelle(float nombreReel) { m_partieReelle = nombreReel; }
-		void setPartieImaginaire(float nombreImaginaire) { m_partieImaginaire = nombreImaginaire; }
+		void setPartieReelle(double nombreReel) { m_partieReelle = nombreReel; }
+		void setPartieImaginaire(double nombreImaginaire) { m_partieImaginaire = nombreImaginaire; }
 		void setDenominateurReel(int denominateur) { this->m_denominateurReel = denominateur ; }
 		void setDenominateurImaginaire(int denominateur) { this->m_denominateurImaginaire = denominateur ; }
 		//void setMode(std::string mode) ;
@@ -87,10 +87,11 @@ class Complexe: public Nombre
 {
 	public:
 		// CONSTRUCTEURS
-	//Nombre(float partieReelle=0, int denominateurReel=0, float partieImaginaire=1, int denominateurImaginaire=0, std::string mode="complexe"); // construction de n'importe quel nombre ?
+	//Nombre(double partieReelle=0, int denominateurReel=0, double partieImaginaire=1, int denominateurImaginaire=0, std::string mode="complexe"); // construction de n'importe quel nombre ?
 
 	/*construction d'un complexe*/ 
-	Complexe(float partieReelle, float partieImaginaire);
+	Complexe(double partieReelle, double partieImaginaire);
+	Complexe();
 	
 
 	// METHODES REDEFINIES
@@ -110,7 +111,8 @@ class Reel: public Nombre
 {
 	public:
 	// CONSTRUCTEURS
-	Reel(float valeur);
+	Reel(double valeur);
+	Reel(): Nombre() {}
 
 	// METHODES CLASSIQUEs
 
@@ -128,6 +130,7 @@ class Rationnel: public Nombre
 	public:
 	// CONSTRUCTEURS
 	Rationnel(int numerateur, int denominateur);
+	Rationnel():Nombre() {}
 
 	// METHODES CLASSIQUEs
 
@@ -147,7 +150,7 @@ class Entier: public Nombre
 	public:
 	//constructeurs
 	Entier(int valeur);
-
+	Entier(): Nombre() {}
 	// METHODES CLASSIQUES 
 
 	// METHODES REDEFINIES

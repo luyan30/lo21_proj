@@ -1,9 +1,12 @@
-﻿La génération a démarré 03/06/2012 20:12:38.
+﻿La génération a démarré 03/06/2012 21:48:12.
      1>Projet "C:\Users\khadre\documents\visual studio 2010\Projects\projetLO21\projetLO21\projetLO21.vcxproj" sur le nœud 2 (build cible(s)).
      1>InitializeBuildStatus:
          Création de "Debug\projetLO21.unsuccessfulbuild", car "AlwaysCreate" a été spécifié.
        ClCompile:
-         Toutes les sorties sont à jour.
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt expression.cpp nombre.cpp
+         nombre.cpp
+         expression.cpp
+         Génération de code en cours...
        ManifestResourceCompile:
          Toutes les sorties sont à jour.
        Link:
@@ -24,4 +27,4 @@
 
 La génération a réussi.
 
-Temps écoulé 00:00:00.81
+Temps écoulé 00:00:03.12

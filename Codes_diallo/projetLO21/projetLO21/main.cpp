@@ -10,10 +10,14 @@ int main ()
 	float b(5);
 	float c(6);
 	//c=(float)b/10;
-	Complexe n1(b,c);
-	Complexe n2(c,b);
+	Complexe n1;
+	Complexe n2;
 	n1.afficher();
+	cout << endl;
 	n2.afficher();
+	cout << endl;
+	(n1+n2).afficher();
+	cout << endl ;
 
 	/*float a(10.10);
 	a/=0.5;
