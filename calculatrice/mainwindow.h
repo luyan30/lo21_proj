@@ -2,8 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include<QPushButton>
-
+#include <QPushButton>
+#include "pile.h"
 namespace Ui {
 class MainWindow;
 }
@@ -15,6 +15,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    Pile* tempo;
+    Pile* historique;
     
 private:
     Ui::MainWindow *ui;
@@ -24,6 +26,10 @@ private:
 private slots:
     void digitClicked();
     void operatorClicked();
+    void traitment();
+    void afficherResult();
+    void MisePile();
+
    /*
     void equalClicked();
     void pointClicked();

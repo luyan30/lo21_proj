@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed May 30 09:28:30 2012
+** Created: Mon Jun 4 09:00:51 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -20,6 +20,7 @@
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
+#include <QtGui/QListWidget>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
@@ -39,6 +40,7 @@ public:
     QWidget *centralWidget;
     QLineEdit *line_command;
     QGroupBox *pile;
+    QListWidget *listWidget;
     QGroupBox *fonction_pile;
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout_3;
@@ -70,9 +72,11 @@ public:
     QPushButton *MOD;
     QPushButton *dollar;
     QPushButton *guillemet;
-    QPushButton *eval_2;
     QPushButton *comma;
     QPushButton *del;
+    QPushButton *entrer;
+    QPushButton *eval_2;
+    QPushButton *pushButton;
     QPushButton *annuler;
     QPushButton *retablir;
     QGroupBox *Fonction_unaire;
@@ -100,7 +104,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(809, 434);
+        MainWindow->resize(785, 479);
         action = new QAction(MainWindow);
         action->setObjectName(QString::fromUtf8("action"));
         actionOuvrir_la_source = new QAction(MainWindow);
@@ -116,6 +120,9 @@ public:
         pile = new QGroupBox(centralWidget);
         pile->setObjectName(QString::fromUtf8("pile"));
         pile->setGeometry(QRect(660, 70, 121, 191));
+        listWidget = new QListWidget(pile);
+        listWidget->setObjectName(QString::fromUtf8("listWidget"));
+        listWidget->setGeometry(QRect(10, 20, 101, 161));
         fonction_pile = new QGroupBox(centralWidget);
         fonction_pile->setObjectName(QString::fromUtf8("fonction_pile"));
         fonction_pile->setGeometry(QRect(450, 280, 351, 71));
@@ -262,11 +269,6 @@ public:
 
         gridLayout_2->addWidget(guillemet, 4, 1, 1, 1);
 
-        eval_2 = new QPushButton(gridLayoutWidget);
-        eval_2->setObjectName(QString::fromUtf8("eval_2"));
-
-        gridLayout_2->addWidget(eval_2, 6, 3, 1, 1);
-
         comma = new QPushButton(gridLayoutWidget);
         comma->setObjectName(QString::fromUtf8("comma"));
 
@@ -276,6 +278,21 @@ public:
         del->setObjectName(QString::fromUtf8("del"));
 
         gridLayout_2->addWidget(del, 6, 2, 1, 1);
+
+        entrer = new QPushButton(gridLayoutWidget);
+        entrer->setObjectName(QString::fromUtf8("entrer"));
+
+        gridLayout_2->addWidget(entrer, 6, 0, 1, 1);
+
+        eval_2 = new QPushButton(gridLayoutWidget);
+        eval_2->setObjectName(QString::fromUtf8("eval_2"));
+
+        gridLayout_2->addWidget(eval_2, 6, 1, 1, 1);
+
+        pushButton = new QPushButton(gridLayoutWidget);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+
+        gridLayout_2->addWidget(pushButton, 6, 3, 1, 1);
 
         annuler = new QPushButton(keyboard);
         annuler->setObjectName(QString::fromUtf8("annuler"));
@@ -288,7 +305,7 @@ public:
         Fonction_unaire->setGeometry(QRect(450, 60, 181, 201));
         gridLayoutWidget_2 = new QWidget(Fonction_unaire);
         gridLayoutWidget_2->setObjectName(QString::fromUtf8("gridLayoutWidget_2"));
-        gridLayoutWidget_2->setGeometry(QRect(10, 20, 158, 170));
+        gridLayoutWidget_2->setGeometry(QRect(20, 10, 151, 191));
         gridLayout_3 = new QGridLayout(gridLayoutWidget_2);
         gridLayout_3->setSpacing(6);
         gridLayout_3->setContentsMargins(11, 11, 11, 11);
@@ -363,7 +380,7 @@ public:
         MainWindow->setStatusBar(statusBar);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 809, 23));
+        menuBar->setGeometry(QRect(0, 0, 785, 23));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         menuHelp = new QMenu(menuBar);
@@ -416,9 +433,11 @@ public:
         MOD->setText(QApplication::translate("MainWindow", "MOD", 0, QApplication::UnicodeUTF8));
         dollar->setText(QApplication::translate("MainWindow", "$", 0, QApplication::UnicodeUTF8));
         guillemet->setText(QApplication::translate("MainWindow", "'", 0, QApplication::UnicodeUTF8));
-        eval_2->setText(QApplication::translate("MainWindow", "Eval", 0, QApplication::UnicodeUTF8));
         comma->setText(QApplication::translate("MainWindow", ",", 0, QApplication::UnicodeUTF8));
         del->setText(QApplication::translate("MainWindow", "del", 0, QApplication::UnicodeUTF8));
+        entrer->setText(QApplication::translate("MainWindow", "entrer", 0, QApplication::UnicodeUTF8));
+        eval_2->setText(QApplication::translate("MainWindow", "Eval", 0, QApplication::UnicodeUTF8));
+        pushButton->setText(QApplication::translate("MainWindow", "'", 0, QApplication::UnicodeUTF8));
         annuler->setText(QApplication::translate("MainWindow", "annuler", 0, QApplication::UnicodeUTF8));
         retablir->setText(QApplication::translate("MainWindow", "retablir", 0, QApplication::UnicodeUTF8));
         Fonction_unaire->setTitle(QString());
