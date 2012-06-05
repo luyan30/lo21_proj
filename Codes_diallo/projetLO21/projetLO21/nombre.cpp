@@ -5,7 +5,7 @@
 	std::cout << "nombre construit! avec premier constructeur" << std::endl;
 }*/
 
-/*Nombre::Nombre(float partieReelle, int denominateurReel, float partieImaginaire, int denominateurImaginaire, std::string mode):
+/*Nombre::Nombre(double partieReelle, int denominateurReel, double partieImaginaire, int denominateurImaginaire, std::string mode):
 m_partieReelle(partieReelle), m_partieImaginaire(partieImaginaire),m_denominateurReel(denominateurReel),
 m_denominateurImaginaire(denominateurImaginaire),m_mode(mode)
 {
@@ -27,7 +27,7 @@ m_denominateurImaginaire(denominateurImaginaire),m_mode(mode)
 
 /*construction d'un complexe*/ 
 
-Nombre::Nombre(float partieReelle, float partieImaginaire)
+Nombre::Nombre(double partieReelle, double partieImaginaire)
 {
 	m_mode="complexe" ; //on entre en mode complexe
 	m_partieReelle = partieReelle ;
@@ -35,7 +35,7 @@ Nombre::Nombre(float partieReelle, float partieImaginaire)
 }
 
 /*construction d'un réel*/ 
-Nombre::Nombre(float valeur)
+Nombre::Nombre(double valeur)
 {
 	m_mode = "reel";
 	m_partieReelle =valeur;
@@ -46,9 +46,9 @@ Nombre::Nombre(float valeur)
 Nombre::Nombre(int numerateur, int denominateur)
 {
 	m_mode = "rationnel";
-	m_partieReelle =(float)numerateur;
+	m_partieReelle =(double)numerateur;
 	if(denominateur==0) {m_partieImaginaire=1; }
-	else m_partieImaginaire=(float)denominateur;	
+	else m_partieImaginaire=(double)denominateur;	
 	
 }
 
@@ -60,17 +60,21 @@ Nombre::Nombre(int valeur)
 	m_partieImaginaire=0;
 }
 
-/*construction d'un nombre par defaut*/
+/*construction d'un nombre sans arguments*/
 Nombre::Nombre():m_partieReelle(0), m_partieImaginaire(0), m_denominateurReel(1), m_denominateurImaginaire(1),m_mode("complexe")
 {
 }
 
 
-Complexe::Complexe(float partieReelle, float partieImaginaire):Nombre(partieReelle, partieImaginaire)
+Complexe::Complexe(double partieReelle, double partieImaginaire):Nombre(partieReelle, partieImaginaire)
 {
 }
 
-Reel::Reel(float valeur): Nombre(valeur)
+Complexe::Complexe(): Nombre()
+{
+}
+
+Reel::Reel(double valeur): Nombre(valeur)
 {
 }
 
@@ -115,7 +119,7 @@ Nombre operator*(Nombre const& n1, Nombre const& n2)
 Nombre operator/(Nombre const& n1, Nombre const& n2)
 {
 	Nombre copie(0,0);
-	float A(0);
+	double A(0);
 	A = n2.getPartieReelle();
 }
 
@@ -124,7 +128,10 @@ Nombre& Nombre::evaluer() { return *this; } ; // méthode virtuelle de Expression
 // Méthodes la variable Complexe
 void Complexe::afficher(std::ostream& f) const	/*affichage d'un complexe*/
 {
-	f<<"("<<this->m_partieReelle<<"/"<<this->m_denominateurReel << ")$(" << this->m_partieImaginaire << "/" << this->m_denominateurImaginaire << ")" ;
+	if ((this->m_denominateurReel==1)&&(this->m_denominateurReel==1))
+		f<<"("<<this->m_partieReelle << ")$(" << this->m_partieImaginaire ;
+	else 
+		f<<"("<<this->m_partieReelle<<"/"<<this->m_denominateurReel << ")$(" << this->m_partieImaginaire << "/" << this->m_denominateurImaginaire << ")" ;
 }
 
 const Nombre& Complexe::evaluer() const 
