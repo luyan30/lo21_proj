@@ -2,12 +2,22 @@
 #define EXPRESSION_H
 #include "nombre.h"
 
-class Expression {
+class Expression
+{
+private:
 
-    public:
+public:
 
-   // virtual Expression* evaluer()const=0;
-    virtual void afficher()const=0;
+    // CONSTRUCTEURS
+
+    // METHODES CLASSIQUES
+    virtual const Nombre& evaluer() const = 0 ; // ?
+    virtual void afficher(std::ostream& f=std::cout) const = 0  ;
+
+    // ACCESSEURS
+
+    // DESTRUCTEURS
+    virtual ~Expression(){} // ?
 
 };
 #endif // EXPRESSION_H

@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QPushButton>
+//#include <QPushButton>
 void MainWindow::traitment(){
 QString tmp=ui->line_command->text();
 if (tempo->traitement(tmp)){
