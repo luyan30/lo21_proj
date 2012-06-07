@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Jun 7 15:50:59 2012
+** Created: Thu Jun 7 16:11:18 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -75,7 +75,7 @@ public:
     QPushButton *entrer;
     QPushButton *del;
     QPushButton *dollar;
-    QPushButton *pushButton;
+    QPushButton *espace;
     QPushButton *MOD;
     QPushButton *SIGN;
     QPushButton *annuler;
@@ -285,10 +285,10 @@ public:
 
         gridLayout_2->addWidget(dollar, 7, 3, 1, 1);
 
-        pushButton = new QPushButton(gridLayoutWidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        espace = new QPushButton(gridLayoutWidget);
+        espace->setObjectName(QString::fromUtf8("espace"));
 
-        gridLayout_2->addWidget(pushButton, 4, 2, 1, 1);
+        gridLayout_2->addWidget(espace, 4, 2, 1, 1);
 
         MOD = new QPushButton(gridLayoutWidget);
         MOD->setObjectName(QString::fromUtf8("MOD"));
@@ -446,7 +446,7 @@ public:
         entrer->setText(QApplication::translate("MainWindow", "entrer", 0, QApplication::UnicodeUTF8));
         del->setText(QApplication::translate("MainWindow", "del", 0, QApplication::UnicodeUTF8));
         dollar->setText(QApplication::translate("MainWindow", "$", 0, QApplication::UnicodeUTF8));
-        pushButton->setText(QString());
+        espace->setText(QApplication::translate("MainWindow", "Space", 0, QApplication::UnicodeUTF8));
         MOD->setText(QApplication::translate("MainWindow", "MOD", 0, QApplication::UnicodeUTF8));
         SIGN->setText(QApplication::translate("MainWindow", "SIGN", 0, QApplication::UnicodeUTF8));
         annuler->setText(QApplication::translate("MainWindow", "annuler", 0, QApplication::UnicodeUTF8));

@@ -29,18 +29,22 @@ this->Element.pop();
 
 
 bool Pile::traitement(QString commande){
-//for (int i=0;i<commande.size();i++)
-//{
-    QStringList list;
-        list = commande.split(QRegExp("\\s+"));
-        qDebug()<<list[1];
-    //if (commande[i]=="'"){return 0}
-    //if (commande[i].isDigit())
-   // {Element.append(new Nombre(commande.at(i).digitValue(),0,0,0,0));
-   // Afficheur.append((QString)commande[i]);}
-  // qDebug()<<QString::number(getElement()[i]->evaluer().getPartieReelle());
-
-return true;
+   if (commande.contains(QRegExp("\'"))){
+       Element.append(new Constant(commande));
+       Afficheur.append(commande);}
+   else
+   { QStringList list;
+        list = commande.split(QRegExp("\\s+"));      
+        for (int i=0;i<list.size();i++)
+        {
+          if (list[i].compare("6"))
+          {
+              Element.append(new Entier(list[i].toInt()));
+              Afficheur.append(list[i]);
+          }
+        }
+   }
+   return true;
 }
 
-//}
+

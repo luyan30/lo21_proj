@@ -27,6 +27,7 @@ void MainWindow::digitClicked()
 void MainWindow::operatorClicked(){
     QPushButton *clickedButton = qobject_cast<QPushButton *>(sender());
     QString operValue = clickedButton->text();
+    if (operValue=="Space"){operValue=' ';}
     if (waitingForOperand) {
          ui->line_command->clear();
      waitingForOperand = false;
@@ -55,6 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     connect(ui->multi, SIGNAL(clicked()),this,SLOT(operatorClicked()));
     connect(ui->comma,SIGNAL(clicked()),this,SLOT(operatorClicked()));
+    connect(ui->espace,SIGNAL(clicked()),this,SLOT(operatorClicked()));
     connect(ui->guillemet,SIGNAL(clicked()),this,SLOT(operatorClicked()));
     connect(ui->point,SIGNAL(clicked()),this,SLOT(operatorClicked()));
     connect(ui->entrer,SIGNAL(clicked()),this,SLOT(traitment()));

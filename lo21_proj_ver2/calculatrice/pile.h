@@ -6,6 +6,7 @@
 #include <QChar>
 #include <QObject>
 #include <QDebug>
+#include <QRegExp>
 #include"expression.h"
 //class Expression;
 //class Nombre;

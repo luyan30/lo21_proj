@@ -50,6 +50,7 @@ Complexe::Complexe(Reel& r1, Reel& r2) // construction d'un complexe avec deux o
     this->m_partieImaginaire = r2.getPartieReelle();
     this->m_denominateurImaginaire = 1;
     this->m_denominateurReel = 1;
+
 }
 
 Complexe::Complexe(Rationnel& q1, Rationnel& q2) // construction d'un complexe avec deux objets de la classe rationnel

@@ -1,6 +1,7 @@
 #ifndef EXPRESSION_H
 #define EXPRESSION_H
 #include <string>
+#include<QString>
 #include <iostream>
 #include "expression.h"
 class Nombre;
@@ -25,11 +26,21 @@ public:
     virtual ~Expression(){} // ?
 
 };
-
+class Constant:public Expression{
+protected:
+    QString constant;
+public:
+    QString getConstant(){return constant;}
+    Constant(QString s):constant(s){}
+    Constant(){}
+    ~Constant(){}
+    const Nombre& evaluer()const{}
+    void afficher(std::ostream& f=std::cout) const{}
+};
 class Nombre: public Expression
 {
 
-    protected: // pour que les méthodes des classes filles puissent y accéder
+    protected: // pour que les mehodes des classes filles puissent y accer
 
     // ATTRIBUTS
         double m_partieReelle;
@@ -37,7 +48,6 @@ class Nombre: public Expression
         int m_denominateurReel;
         int m_denominateurImaginaire;
         std::string m_mode;
-
 
     public:
 
@@ -85,7 +95,7 @@ class Nombre: public Expression
     // DESTRUCTEURS
 
     // OPERATEURS : a t on besoin de surcharger les opérateurs ? peut etre l'operateur d'affichage vu qu'on va afficher les résultats des calculs ?
-        virtual Nombre& operator+=(Nombre const& n) = 0;
+        virtual Nombre& operator+=(Nombre const& n)=0 ;
         virtual Nombre& operator-=(Nombre const& n) = 0;
         virtual Nombre& operator*=(Nombre const& n) = 0;
         virtual Nombre& operator/=(Nombre const& n) = 0;
@@ -229,29 +239,24 @@ class Radian: public Nombre
 class Operation : public Expression
 {
 protected:
-
-    Expression* ex1;
-    Expression* ex2;
     int choix;
-
 public:
-
-    // CONSTRUCTEURS
-    Operation(Expression* x1,Expression* x2,int indice):ex1(x1),ex2(x2),choix(indice){}
-    Operation(Expression* x1, int indice):ex1(x1), choix(indice), ex2(0){}
-
+   // CONSTRUCTEURS
+  //  Operation(Expression* x1,Expression* x2,int indice):ex1(x1),ex2(x2),choix(indice){}
+  //  Operation(Expression* x1, int indice):ex1(x1), choix(indice), ex2(0){}
+ Operation( int indice): choix(indice){}
     //Expression* evaluer() const;
 };
 
 class OperationBinaire : public Operation // classe concrete
 {
 private:
-
-
+    Expression* ex1;
+    Expression* ex2;
 public:
 
     // CONSTRUCTEURS
-    OperationBinaire(Expression* x1,Expression* x2,int indice):Operation(x1,x2,indice){} // une operation binaire contient deux "expressions"
+    OperationBinaire(Expression* x1,Expression* x2,int indice):Operation(indice),ex1(x1),ex2(x2){} // une operation binaire contient deux "expressions"
 
     // METHODES REDEFINIES
     const Nombre& evaluer() const  ; // ?
@@ -263,11 +268,11 @@ public:
 class OperationUnaire : public Operation // classe concrete
 {
 private:
-
+    Expression* ex1;
 public:
 
     // CONSTRUCTEURS
-    OperationUnaire(Expression* x1,int indice):Operation(x1,indice){} // une operation unaire contient deux "expressions"
+    OperationUnaire(Expression* x1,int indice):Operation(indice),ex1(x1){} // une operation unaire contient deux "expressions"
 
     // METHODES REDEFINIES
     const Nombre& evaluer() const ; // ?

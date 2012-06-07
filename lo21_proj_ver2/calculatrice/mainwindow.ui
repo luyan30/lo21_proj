@@ -315,9 +315,9 @@
        </widget>
       </item>
       <item row="4" column="2">
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="espace">
         <property name="text">
-         <string> </string>
+         <string>Space</string>
         </property>
        </widget>
       </item>
