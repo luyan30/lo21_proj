@@ -37,14 +37,16 @@ void annuler();
 void retablir();
 void empiler_Aff(QString s);
 void empiler(Expression* s);
-void depiler();
+Expression * depiler();
 void afficher();
+QString depiler_Aff();
 //bool expressionDetect(const QChar c);
 Pile();
 ~Pile();
 Pile& get_pile();
 Expression * calculer();
 int mode_resultat();
+int get_m_nombreElement(){return m_nombreElement;}
 
 };
 #endif // PILE_H

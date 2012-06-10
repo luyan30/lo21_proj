@@ -150,16 +150,15 @@ Nombre& Complexe::operator+=(Nombre const& n) // on est en mode complexe
         return *this;
     }
 
-    if (n.getMode() == "rationnel") // addition d'un nombre complexe et d'un rationnel
-    {
+   /* if (n.getMode() == "rationnel") // addition d'un nombre complexe et d'un rationnel
+    {                   rationnel
         this->m_partieReelle = this->m_partieReelle + n.getPartieReelle();
         return *this;
-    }
-
+    }*/
     if (n.getMode() == "rationnel") // addition d'un nombre complexe et d'un rationnel, on convertit le rationnel en reel avant de l'ajouter au complexe
     {
         double* temp = new double(0);
-        *temp = (double) (n.getPartieReelle() / n.getDenominateurReel());
+        *temp = (double) (n.getPartieReelle()) / n.getDenominateurReel();
         this->m_partieReelle = this->m_partieReelle + (*temp);
         delete temp;
         return *this;
@@ -325,9 +324,15 @@ Nombre& Entier::operator/=(Nombre const& n) // on est en mode entier ???
     this->m_partieReelle /=n.getPartieReelle(); /// ??? division de deux entiers doit donner quoi ???
     return *this;
 }
+QString Operation::match_indice(int indice){
+    switch(indice){
+    case 1: return "Addition";
+    default: return "Inconnu";
+    };
 
+}
 const Nombre& OperationBinaire::evaluer() const
-{	Nombre* c= new Complexe(); // pointeur sur nombre qui sera initialis?par le constructeur sans argument
+{	Nombre* c= new Complexe(0.0,0.0); // pointeur sur nombre qui sera initialis?par le constructeur sans argument
 
     if (this->choix ==1) // on a choisi l'addition
     {
@@ -354,7 +359,36 @@ const Nombre& OperationBinaire::evaluer() const
     }
     return *c;
 }
+ Expression* OperationBinaire::evaluer2() const
+{	Nombre* c= new Complexe(); // pointeur sur nombre qui sera initialis?par le constructeur sans argument
 
+    if (this->choix ==1) // on a choisi l'addition
+    {
+        qDebug("thischoix");
+        *c+= ex1->evaluer();
+        *c+= ex2->evaluer();
+    }
+
+    if (this->choix ==2) // on a choisi la soustraction
+    {
+        *c+= ex1->evaluer();
+        *c-= ex2->evaluer();
+    }
+
+    if (this->choix ==3) // on a choisi la multiplication
+    {
+        *c+= ex1->evaluer();
+        *c*= ex2->evaluer();
+    }
+
+    if (this->choix ==4) // on a choisi la division
+    {
+        *c+= ex1->evaluer();
+        *c/= ex2->evaluer();
+    }
+    if (c->match_affiche()==1){return new Reel(c->getPartieReelle());}
+    else return c;
+}
 const Nombre& OperationUnaire::evaluer() const
 {
     Nombre* c=new Complexe();

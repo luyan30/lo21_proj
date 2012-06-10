@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>785</width>
+    <width>805</width>
     <height>479</height>
    </rect>
   </property>
@@ -53,10 +53,10 @@
    <widget class="QGroupBox" name="fonction_pile">
     <property name="geometry">
      <rect>
-      <x>450</x>
+      <x>460</x>
       <y>280</y>
-      <width>351</width>
-      <height>71</height>
+      <width>281</width>
+      <height>111</height>
      </rect>
     </property>
     <property name="title">
@@ -67,7 +67,7 @@
       <rect>
        <x>20</x>
        <y>20</y>
-       <width>320</width>
+       <width>251</width>
        <height>31</height>
       </rect>
      </property>
@@ -87,6 +87,32 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="drop">
+        <property name="text">
+         <string>DROP</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>60</y>
+       <width>239</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="mean">
+        <property name="text">
+         <string>mean</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="swap">
         <property name="text">
          <string>swap</string>
@@ -94,9 +120,9 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="mean">
+       <widget class="QPushButton" name="sum">
         <property name="text">
-         <string>mean</string>
+         <string>SUM</string>
         </property>
        </widget>
       </item>
@@ -132,10 +158,10 @@
    <widget class="QGroupBox" name="keyboard">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>60</y>
+      <x>40</x>
+      <y>50</y>
       <width>371</width>
-      <height>271</height>
+      <height>321</height>
      </rect>
     </property>
     <property name="title">
@@ -145,9 +171,9 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>40</y>
+       <y>30</y>
        <width>323</width>
-       <height>199</height>
+       <height>257</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
@@ -192,13 +218,6 @@
        <widget class="QPushButton" name="num3">
         <property name="text">
          <string>3</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QPushButton" name="num0">
-        <property name="text">
-         <string>0</string>
         </property>
        </widget>
       </item>
@@ -251,6 +270,90 @@
         </property>
        </widget>
       </item>
+      <item row="7" column="0">
+       <widget class="QPushButton" name="POW">
+        <property name="text">
+         <string>POW</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="3">
+       <widget class="QPushButton" name="comma">
+        <property name="text">
+         <string>,</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QPushButton" name="eval">
+        <property name="text">
+         <string>Eval</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="0">
+       <widget class="QPushButton" name="entrer">
+        <property name="text">
+         <string>entrer</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="0">
+       <widget class="QPushButton" name="del">
+        <property name="text">
+         <string>del</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="3">
+       <widget class="QPushButton" name="dollar">
+        <property name="text">
+         <string>$</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QPushButton" name="MOD">
+        <property name="text">
+         <string>MOD</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QPushButton" name="annuler">
+        <property name="text">
+         <string>annuler</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="2">
+       <widget class="QPushButton" name="retablir">
+        <property name="text">
+         <string>retablir</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="2">
+       <widget class="QPushButton" name="SIGN">
+        <property name="text">
+         <string>SIGN</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QPushButton" name="num0">
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1" colspan="2">
+       <widget class="QPushButton" name="espace">
+        <property name="text">
+         <string>Space</string>
+        </property>
+       </widget>
+      </item>
       <item row="4" column="3">
        <widget class="QPushButton" name="slash">
         <property name="text">
@@ -258,94 +361,17 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
-       <widget class="QPushButton" name="POW">
-        <property name="text">
-         <string>POW</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="3">
-       <widget class="QPushButton" name="comma">
-        <property name="text">
-         <string>,</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="3">
+      <item row="7" column="2">
        <widget class="QPushButton" name="guillemet">
         <property name="text">
          <string>'</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
+      <item row="8" column="3">
        <widget class="QPushButton" name="point">
         <property name="text">
          <string>.</string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="1">
-       <widget class="QPushButton" name="eval_2">
-        <property name="text">
-         <string>Eval</string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="0">
-       <widget class="QPushButton" name="entrer">
-        <property name="text">
-         <string>entrer</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0">
-       <widget class="QPushButton" name="del">
-        <property name="text">
-         <string>del</string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="3">
-       <widget class="QPushButton" name="dollar">
-        <property name="text">
-         <string>$</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="2">
-       <widget class="QPushButton" name="espace">
-        <property name="text">
-         <string>Space</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QPushButton" name="MOD">
-        <property name="text">
-         <string>MOD</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="2">
-       <widget class="QPushButton" name="SIGN">
-        <property name="text">
-         <string>SIGN</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="1">
-       <widget class="QPushButton" name="annuler">
-        <property name="text">
-         <string>annuler</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="2">
-       <widget class="QPushButton" name="retablir">
-        <property name="text">
-         <string>retablir</string>
         </property>
        </widget>
       </item>
@@ -476,7 +502,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>785</width>
+     <width>805</width>
      <height>23</height>
     </rect>
    </property>

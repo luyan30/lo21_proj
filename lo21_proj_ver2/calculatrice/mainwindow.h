@@ -22,24 +22,32 @@ private:
     QPushButton *digitButtons[10];
     bool waitingForOperand;
     void clear();
+    void connection();
 private slots:
     void digitClicked();
     void operatorClicked();
     void traitment();
     void afficherResult();
     void MisePile();
-
+    void annuler();
+    void evaluation();
+    void pileCLear();
+    void pileDup();
+    void pileDrop();
+    void pileSum();
+    void pileMean();
+    void pileSwap();}
    /*
     void equalClicked();
     void pointClicked();
     void changeSignClicked();
     void backspaceClicked();
-    void clear();
+
     void clearAll();
     void clearMemory();
     void readMemory();
     void setMemory();
     void addToMemory();*/
-};
+;
 
 #endif // MAINWINDOW_H

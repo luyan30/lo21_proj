@@ -19,6 +19,7 @@ public:
     // METHODES CLASSIQUES
     virtual const Nombre& evaluer() const = 0 ; // ?
     virtual void afficher(std::ostream& f=std::cout) const = 0  ;
+    virtual QString getPropriete()=0;
 
     // ACCESSEURS
 
@@ -36,6 +37,7 @@ public:
     ~Constant(){}
     const Nombre& evaluer()const{}
     void afficher(std::ostream& f=std::cout) const{}
+ QString getPropriete(){return constant;}
 };
 class Nombre: public Expression
 {
@@ -99,7 +101,13 @@ class Nombre: public Expression
         virtual Nombre& operator-=(Nombre const& n) = 0;
         virtual Nombre& operator*=(Nombre const& n) = 0;
         virtual Nombre& operator/=(Nombre const& n) = 0;
+        virtual QString getPropriete()=0;
 
+       int match_affiche() const{
+            if(this->getPartieImaginaire()==0 &&this->getDenominateurReel()==1){
+            return 1;
+            }
+      }
 };
 
 class Complexe: public Nombre
@@ -129,6 +137,10 @@ class Complexe: public Nombre
         Nombre& operator-=(Nombre const& n) ;
         Nombre& operator*=(Nombre const& n) ;
         Nombre& operator/=(Nombre const& n) ;
+        QString getPropriete(){
+             QString s;
+          s=QString::number(this->getPartieReelle())+"$"+QString::number(this->getPartieImaginaire());
+                                return s;}
 
 
 };
@@ -154,6 +166,11 @@ class Reel: public Nombre
         Nombre& operator-=(Nombre const& n);
         Nombre& operator*=(Nombre const& n);
         Nombre& operator/=(Nombre const& n);
+        QString getPropriete(){
+                    QString s;
+                s=QString::number(this->getPartieReelle()).replace(".",",");
+                                       return s;}
+
 };
 
 class Rationnel: public Nombre
@@ -168,6 +185,11 @@ class Rationnel: public Nombre
     // METHODES REDEFINIES
         void afficher(std::ostream& f=std::cout) const  ;
         const Rationnel& evaluer() const ;
+        QString getPropriete(){
+            QString s;
+            s=QString::number(this->getPartieReelle())+"/"+QString::number(this->getDenominateurReel());
+            return s;
+            }
 
     // ACCESSEURS
 
@@ -193,6 +215,9 @@ class Entier: public Nombre
     // METHODES REDEFINIES
         void afficher(std::ostream& f=std::cout) const  ;
         const Entier& evaluer() const ;
+        QString getPropriete(){
+              return QString::number(this->getPartieReelle());
+            }
 
     // ACCESSEURS
 
@@ -245,6 +270,8 @@ public:
   //  Operation(Expression* x1,Expression* x2,int indice):ex1(x1),ex2(x2),choix(indice){}
   //  Operation(Expression* x1, int indice):ex1(x1), choix(indice), ex2(0){}
  Operation( int indice): choix(indice){}
+ QString match_indice(int indice);
+ int getIndice(){return choix;}
     //Expression* evaluer() const;
 };
 
@@ -257,10 +284,15 @@ public:
 
     // CONSTRUCTEURS
     OperationBinaire(Expression* x1,Expression* x2,int indice):Operation(indice),ex1(x1),ex2(x2){} // une operation binaire contient deux "expressions"
-
+  Expression* evaluer2()const;
     // METHODES REDEFINIES
     const Nombre& evaluer() const  ; // ?
-    void afficher(std::ostream& f=std::cout) const   ;
+    void afficher(std::ostream& f=std::cout) const;
+    QString getPropriete(){
+        return this->match_indice(this->getIndice());
+        }
+    QString getResult(){return this->evaluer2()->getPropriete();}
+
 
     //Expression* evaluer() const;
 };
@@ -275,9 +307,13 @@ public:
     OperationUnaire(Expression* x1,int indice):Operation(indice),ex1(x1){} // une operation unaire contient deux "expressions"
 
     // METHODES REDEFINIES
-    const Nombre& evaluer() const ; // ?
+    const Nombre& evaluer() const ;
+   //Expression* evaluer()const;// ?
     void afficher(std::ostream& f=std::cout) const ;
-
+    QString getPropriete(){
+        return this->match_indice(this->getIndice());
+        }
+    //QString getResult(){return this->evaluer().getPropriete();}
     //Expression* evaluer() const;
 };
 

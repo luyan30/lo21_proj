@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Thu Jun 7 16:49:20 2012
+** Created: Sun Jun 10 03:10:30 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -36,6 +36,14 @@ static const uint qt_meta_data_MainWindow[] = {
       45,   11,   11,   11, 0x08,
       57,   11,   11,   11, 0x08,
       74,   11,   11,   11, 0x08,
+      85,   11,   11,   11, 0x08,
+      95,   11,   11,   11, 0x08,
+     108,   11,   11,   11, 0x08,
+     120,   11,   11,   11, 0x08,
+     130,   11,   11,   11, 0x08,
+     141,   11,   11,   11, 0x08,
+     151,   11,   11,   11, 0x08,
+     162,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -43,6 +51,9 @@ static const uint qt_meta_data_MainWindow[] = {
 static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0\0digitClicked()\0operatorClicked()\0"
     "traitment()\0afficherResult()\0MisePile()\0"
+    "annuler()\0evaluation()\0pileCLear()\0"
+    "pileDup()\0pileDrop()\0pileSum()\0"
+    "pileMean()\0pileSwap()\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -56,6 +67,14 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 2: _t->traitment(); break;
         case 3: _t->afficherResult(); break;
         case 4: _t->MisePile(); break;
+        case 5: _t->annuler(); break;
+        case 6: _t->evaluation(); break;
+        case 7: _t->pileCLear(); break;
+        case 8: _t->pileDup(); break;
+        case 9: _t->pileDrop(); break;
+        case 10: _t->pileSum(); break;
+        case 11: _t->pileMean(); break;
+        case 12: _t->pileSwap(); break;
         default: ;
         }
     }
@@ -94,9 +113,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 13;
     }
     return _id;
 }
