@@ -324,9 +324,11 @@ Nombre& Entier::operator/=(Nombre const& n) // on est en mode entier ???
     this->m_partieReelle /=n.getPartieReelle(); /// ??? division de deux entiers doit donner quoi ???
     return *this;
 }
+
+
 QString Operation::match_indice(int indice){
     switch(indice){
-    case 1: return "Addition";
+    case 1: return "+";
     default: return "Inconnu";
     };
 
@@ -359,12 +361,33 @@ const Nombre& OperationBinaire::evaluer() const
     }
     return *c;
 }
- Expression* OperationBinaire::evaluer2() const
-{	Nombre* c= new Complexe(); // pointeur sur nombre qui sera initialis?par le constructeur sans argument
+ Expression* OperationBinaire::evaluer2()
+ {	if (this->ex1->getPropriete().contains("'")||this->ex2->getPropriete().contains("'"))
+     { QString s1;
+       QString s2;
+       QRegExp rx("^'(.*)'$");
+        if( this->ex1->getPropriete().contains("'"))
+         {   rx.indexIn(this->ex1->getPropriete());
+             s1=rx.cap(1);}
+        else {s1=ex1->getPropriete();}
+         if (this->ex2->getPropriete().contains("'"))
+              {
+                  rx.indexIn(this->ex2->getPropriete());
+                   s2=rx.cap(1);
+              }
+         else
+         {s2=ex2->getPropriete();}
+         int indice=this->choix;
+         QString s=this->match_indice(indice);
+
+         return new Constant("'"+s1+" "+s2+" "+s+"'");
+     }
+
+     Nombre* c= new Complexe(); // pointeur sur nombre qui sera initialis?par le constructeur sans argument
 
     if (this->choix ==1) // on a choisi l'addition
     {
-        qDebug("thischoix");
+
         *c+= ex1->evaluer();
         *c+= ex2->evaluer();
     }

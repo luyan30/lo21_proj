@@ -36,7 +36,8 @@ private slots:
     void pileDrop();
     void pileSum();
     void pileMean();
-    void pileSwap();}
+    void pileSwap();
+    void pileFonc();}
    /*
     void equalClicked();
     void pointClicked();

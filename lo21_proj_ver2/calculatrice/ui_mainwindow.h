@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sun Jun 10 02:29:19 2012
+** Created: Sun Jun 10 18:23:35 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -52,6 +52,7 @@ public:
     QPushButton *mean;
     QPushButton *swap;
     QPushButton *sum;
+    QPushButton *confirmer;
     QLineEdit *Result;
     QLabel *result;
     QGroupBox *keyboard;
@@ -130,10 +131,10 @@ public:
         listWidget->setGeometry(QRect(10, 20, 101, 161));
         fonction_pile = new QGroupBox(centralWidget);
         fonction_pile->setObjectName(QString::fromUtf8("fonction_pile"));
-        fonction_pile->setGeometry(QRect(460, 280, 281, 111));
+        fonction_pile->setGeometry(QRect(470, 280, 301, 121));
         horizontalLayoutWidget = new QWidget(fonction_pile);
         horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(20, 20, 251, 31));
+        horizontalLayoutWidget->setGeometry(QRect(20, 40, 251, 31));
         horizontalLayout_3 = new QHBoxLayout(horizontalLayoutWidget);
         horizontalLayout_3->setSpacing(6);
         horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
@@ -156,7 +157,7 @@ public:
 
         horizontalLayoutWidget_2 = new QWidget(fonction_pile);
         horizontalLayoutWidget_2->setObjectName(QString::fromUtf8("horizontalLayoutWidget_2"));
-        horizontalLayoutWidget_2->setGeometry(QRect(30, 60, 239, 31));
+        horizontalLayoutWidget_2->setGeometry(QRect(30, 80, 239, 31));
         horizontalLayout = new QHBoxLayout(horizontalLayoutWidget_2);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
@@ -177,6 +178,9 @@ public:
 
         horizontalLayout->addWidget(sum);
 
+        confirmer = new QPushButton(fonction_pile);
+        confirmer->setObjectName(QString::fromUtf8("confirmer"));
+        confirmer->setGeometry(QRect(190, 10, 75, 23));
         Result = new QLineEdit(centralWidget);
         Result->setObjectName(QString::fromUtf8("Result"));
         Result->setGeometry(QRect(540, 20, 113, 20));
@@ -446,6 +450,7 @@ public:
         mean->setText(QApplication::translate("MainWindow", "mean", 0, QApplication::UnicodeUTF8));
         swap->setText(QApplication::translate("MainWindow", "swap", 0, QApplication::UnicodeUTF8));
         sum->setText(QApplication::translate("MainWindow", "SUM", 0, QApplication::UnicodeUTF8));
+        confirmer->setText(QApplication::translate("MainWindow", "Confirmer", 0, QApplication::UnicodeUTF8));
         result->setText(QApplication::translate("MainWindow", "Result\357\274\232", 0, QApplication::UnicodeUTF8));
         keyboard->setTitle(QString());
         num4->setText(QApplication::translate("MainWindow", "4", 0, QApplication::UnicodeUTF8));

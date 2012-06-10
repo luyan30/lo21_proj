@@ -8,9 +8,8 @@ annuler();
 MisePile();}
 }
 
-
 void MainWindow::digitClicked()
-{//qDebug("tester");
+{
     QPushButton *clickedButton = qobject_cast<QPushButton *>(sender());
     int digitValue = clickedButton->text().toInt();
     if (ui->line_command->text() == "0" && digitValue == 0.0)
@@ -50,16 +49,21 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::MisePile(){
+
     for(int i =0;i<tempo->get_m_nombreElement();i++)
     {ui->listWidget->item(i)->setText("");
     }
+    if(tempo->getElement().size()==0){
+        ui->Result->setText("");
+    }
+        else{
 
     for(int i=0;i<tempo->getAff().count(); i++)
     {
        ui->listWidget->item(i)->setText(tempo->getAff().value(i));
     }
     ui->Result->setText(tempo->getElement().last()->getPropriete());
-    }
+    }}
 
 
 
@@ -68,9 +72,9 @@ Expression *ex=tempo->depiler();
 tempo->depiler_Aff();
 MisePile();
 QString nouveau=ex->getPropriete();
+qDebug()<<nouveau;
 QRegExp rx("^'(.*)'$");
 rx.indexIn(nouveau);
-qDebug()<<rx.cap(1);
 ui->line_command->setText(rx.cap(1));
 
 }
@@ -82,12 +86,53 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-void MainWindow::pileCLear(){}
-void MainWindow::pileDup(){}
-void MainWindow::pileDrop(){}
-void MainWindow::pileSum(){}
-void MainWindow::pileMean(){}
-void MainWindow::pileSwap(){}
+void MainWindow::pileCLear(){
+
+    int nb=tempo->getAff().size();
+    for(int i=0;i<nb;i++)
+    {
+        tempo->depiler();
+        tempo->depiler_Aff();
+
+    }
+    MisePile();
+}
+
+void MainWindow::pileDup(){
+tempo->dup();
+    MisePile();
+}
+void MainWindow::pileDrop(){
+    tempo->drop();
+    MisePile();
+}
+
+void MainWindow::pileFonc(){//enfin n'utilise pas pour le moment
+    QString s=ui->line_command->text();
+    qDebug()<<s;
+    QRegExp rxad("^+(.*)$");
+    QRegExp rxme("^/(.*)$");
+    rxad.indexIn(s);
+    rxme.indexIn(s);
+    if(s.contains("/")){tempo->mean(rxme.cap(1).toInt());qDebug("dd");}
+    else if (s.contains("+")){tempo->sum(rxad.cap(1).toInt());}
+    MisePile();qDebug("sd");
+}
+
+void MainWindow::pileSum(){
+   // ui->line_command->setText("combien de elements: entrer par +");
+    tempo->sum(2);
+    MisePile();
+}
+void MainWindow::pileMean() {
+   // ui->line_command->setText("combien de elements:entrer par /");
+    tempo->mean(2);
+    MisePile();
+}
+void MainWindow::pileSwap(){
+tempo->swap(0,1);
+MisePile();
+}
 
 void MainWindow::annuler()
 {
@@ -145,5 +190,6 @@ connect(ui->clear,SIGNAL(clicked()),this,SLOT(pileCLear()));
   connect(ui->drop,SIGNAL(clicked()),this,SLOT(pileDrop()));
   connect(ui->sum,SIGNAL(clicked()),this,SLOT(pileSum()));
   connect(ui->mean,SIGNAL(clicked()),this,SLOT(pileMean()));
-  connect(ui->swap,SIGNAL(clicked()),this,SLOT(pileSwap()));}
+  connect(ui->swap,SIGNAL(clicked()),this,SLOT(pileSwap()));
+  connect(ui->confirmer,SIGNAL(clicked()),this,SLOT(pileFonc()));}
 

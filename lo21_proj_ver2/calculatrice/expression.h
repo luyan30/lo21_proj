@@ -3,7 +3,7 @@
 #include <string>
 #include<QString>
 #include <iostream>
-#include "expression.h"
+#include<QRegExp>
 class Nombre;
 class Reel;
 class Rationnel;
@@ -270,8 +270,8 @@ public:
   //  Operation(Expression* x1,Expression* x2,int indice):ex1(x1),ex2(x2),choix(indice){}
   //  Operation(Expression* x1, int indice):ex1(x1), choix(indice), ex2(0){}
  Operation( int indice): choix(indice){}
- QString match_indice(int indice);
  int getIndice(){return choix;}
+  QString match_indice(int indice);
     //Expression* evaluer() const;
 };
 
@@ -284,7 +284,7 @@ public:
 
     // CONSTRUCTEURS
     OperationBinaire(Expression* x1,Expression* x2,int indice):Operation(indice),ex1(x1),ex2(x2){} // une operation binaire contient deux "expressions"
-  Expression* evaluer2()const;
+  Expression* evaluer2();
     // METHODES REDEFINIES
     const Nombre& evaluer() const  ; // ?
     void afficher(std::ostream& f=std::cout) const;
@@ -308,6 +308,7 @@ public:
 
     // METHODES REDEFINIES
     const Nombre& evaluer() const ;
+
    //Expression* evaluer()const;// ?
     void afficher(std::ostream& f=std::cout) const ;
     QString getPropriete(){

@@ -24,12 +24,13 @@ bool m_constantAssez;
 public:
 QStack <QString> Afficheur;
 QString get_result(){return result;}
+QString set_result(QString s){result=s;}
 QStack<Expression *> getElement(){return Element;}
 QStack<QString> getAff(){return Afficheur;}
 bool traitement(QString commande);
 void swap(int x,int y);
 void sum(int x);
-Expression* mean(int x);
+void mean(int x);
 void clear();
 void dup();
 void drop();
@@ -40,7 +41,6 @@ void empiler(Expression* s);
 Expression * depiler();
 void afficher();
 QString depiler_Aff();
-//bool expressionDetect(const QChar c);
 Pile();
 ~Pile();
 Pile& get_pile();

@@ -1,17 +1,29 @@
 #include "pile.h"
 Pile::Pile(){
 m_nombreElement=10;
-nombreMaximal=30;
+nombreMaximal=20;
 m_constantAssez=true;
 result="";
 }
 
 Pile::~Pile(){}
+void Pile::dup()
+{    Expression *ex1=this->getElement().top();
+     this->empiler(ex1);
+     QString s=this->getAff().top();
+     this->empiler_Aff(s);
+}
+
+void Pile::drop(){
+    this->depiler();
+  this->depiler_Aff();}
+
 
 void Pile::empiler(Expression * s){
 
    this->Element.push(s);
 }
+
 void Pile::empiler_Aff(QString s)
 {this->Afficheur.push(s);}
 
@@ -108,6 +120,7 @@ bool Pile::traitement(QString commande){
                 OperationBinaire *op=new OperationBinaire(Element.pop(),Element.pop(),1);
                  this->depiler_Aff();
                  this->depiler_Aff();
+
                // qDebug()<<QString::number(Afficheur.size(),10);
                 Element.append( op->evaluer2());
                 Afficheur.append(op->getResult());
@@ -145,5 +158,72 @@ bool Pile::traitement(QString commande){
 
    return true;
 }
+void Pile::mean(int x){
+    sum(x);
+    Expression *ex1=this->depiler();
+     this->depiler_Aff();
+   double s= ex1->getPropriete().toDouble()/2;
+   Reel * resultEx=new Reel(s);
+   Element.append(resultEx);
+   Afficheur.append(QString::number(s));}
+
+  /*  sum(x);
+   double re= this->get_result().toDouble()/x;
+   Reel * resultEx=new Reel(re);
+   result=resultEx->getPropriete();
+   this->depiler();
+   this->depiler_Aff();
+   Element.append(resultEx);
+   Afficheur.append(result);
+
+}*/
+void Pile::swap(int x,int y)//pour le moment , je juste fait les deux premiers elements
+{
+    Expression *ex1=this->depiler();
+
+    QString s1=this->depiler_Aff();
+    Expression *ex2=this->depiler();
+    QString s2=this->depiler_Aff();
+    qDebug()<<s1;
+    qDebug()<<s2;
+    this->empiler(ex1);
+    this->empiler(ex2);
+    this->empiler_Aff(s1);
+    this->empiler_Aff(s2);
+}
+
+void Pile::sum(int x){
+    Expression *ex1= this->depiler();
+     Expression *ex2=this->depiler();
+     OperationBinaire * op=new OperationBinaire(ex1,ex2,1);
+     Element.append( op->evaluer2());
+     this->depiler_Aff();
+     this->depiler_Aff();
+     Afficheur.append(op->getResult());
+}
+    /*
+   OperationBinaire *op;
+   Expression* ex1;
+   Expression* ex2;
+    for (int i=0;i<x;i++)
+    {
+
+         ex1= this->depiler();
+         ex2=this->depiler();
+
+        if(ex1->getPropriete().contains("'")||ex1->getPropriete().contains("'"))
+        {Element.append(ex2);
+            Element.append(ex1);
+        }
+        else{
+            op=new OperationBinaire(ex1,ex2,1);
+            this->depiler_Aff();
+           this->depiler_Aff();
+        Element.append( op->evaluer2());
+        Afficheur.append(op->getResult());}
+
+}
+    this->set_result(Afficheur.top());
+}*/
 
 
