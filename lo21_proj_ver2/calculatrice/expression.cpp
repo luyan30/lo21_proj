@@ -133,56 +133,99 @@ const Entier& Entier::evaluer() const
 
 
 
+Complexe& Complexe::operator=(const Complexe& c)
+{
+    if (this!=&c)
+    {
+        this->setDenominateurImaginaire(c.getDenominateurImaginaire());
+        this->setDenominateurReel(c.getDenominateurReel());
+        this->setPartieReelle(c.getPartieReelle());
+        this->setPartieImaginaire(c.getPartieImaginaire());
+        this->setMode(c.getMode()); // cette methode est privée
+    }
+    return *this;
+}
 
-Nombre& Complexe::operator+=(Nombre const& n) // on est en mode complexe
+Reel& Reel::operator=(const Reel& r)
+{
+    if (this!=&r)
+    {
+        //this->setDenominateurImaginaire(c.getDenominateurImaginaire());
+        //this->setDenominateurReel(c.getDenominateurReel());
+        this->setPartieReelle(r.getPartieReelle());
+        //this->setPartieImaginaire(c.getPartieImaginaire());
+        this->setMode(r.getMode()); // cette methode est privée
+    }
+    return *this;
+}
+
+Rationnel& Rationnel::operator=(const Rationnel& q)
+{
+    if (this!=&q)
+    {
+        this->setDenominateurImaginaire(q.getDenominateurImaginaire());
+        this->setDenominateurReel(q.getDenominateurReel());
+        this->setPartieReelle(q.getPartieReelle());
+        this->setPartieImaginaire(q.getPartieImaginaire());
+        this->setMode(q.getMode()); // cette methode est privée
+    }
+    return *this;
+}
+
+Entier& Entier::operator=(const Entier& e)
+{
+    if (this!=&e)
+    {
+        this->setDenominateurImaginaire(e.getDenominateurImaginaire());
+        this->setDenominateurReel(e.getDenominateurReel());
+        this->setPartieReelle(e.getPartieReelle());
+        this->setPartieImaginaire(e.getPartieImaginaire());
+        this->setMode(e.getMode()); // cette methode est privée
+    }
+    return *this;
+}
+
+
+Nombre& Complexe::operator+(const Nombre& n) // on est en mode complexe  : Ok !
 {
     if (n.getMode() == "complexe") // addition de deux nombres complexes
     {
         this->m_partieReelle = this->m_partieReelle + n.getPartieReelle();
         this->m_partieImaginaire = this->m_partieImaginaire + n.getPartieImaginaire();
-        return *this;
+
     }
 
 
     if (n.getMode() == "reel") // addition d'un nombre complexe et d'un reel
     {
         this->m_partieReelle = this->m_partieReelle + n.getPartieReelle();
-        return *this;
+
     }
 
-   /* if (n.getMode() == "rationnel") // addition d'un nombre complexe et d'un rationnel
-    {                   rationnel
-        this->m_partieReelle = this->m_partieReelle + n.getPartieReelle();
-        return *this;
-    }*/
     if (n.getMode() == "rationnel") // addition d'un nombre complexe et d'un rationnel, on convertit le rationnel en reel avant de l'ajouter au complexe
     {
         double* temp = new double(0);
-        *temp = (double) (n.getPartieReelle()) / n.getDenominateurReel();
-        this->m_partieReelle = this->m_partieReelle + (*temp);
+        *temp = (double) (n.getPartieReelle() / n.getDenominateurReel());
+        this->m_partieReelle += (*temp);
         delete temp;
-        return *this;
     }
 
     if (n.getMode() == "entier") // addition d'un nombre complexe et d'un entier
     {
         this->m_partieReelle = this->m_partieReelle + n.getPartieReelle();
-        return *this;
     }
-
-else return *this;
+    return *this;
 }
 
-Nombre& Reel::operator+=(Nombre const& n) // on est en mode reel
+Nombre& Reel::operator+(const Nombre& n) // on est en mode reel : Ok !
 {
     if (n.getMode() == "complexe") // addition d'un reel et d'un complexe
     {
         Nombre* c = new Complexe();
-      //  *c+=n;
-        //*c+=(*this);
+        (*c)=(*c) + n;      // ne pas mettre "*c+=n" : ajouter des parentheses
+        (*c)= (*c)+(*this);
         // upcasting de reel en complexe ???
-        c->setPartieReelle(n.getPartieReelle()+(*this).getPartieReelle());
-        c->setPartieImaginaire(n.getPartieImaginaire());
+        //*this = *c;
         //delete c;
         return *c;
     }
@@ -190,7 +233,7 @@ Nombre& Reel::operator+=(Nombre const& n) // on est en mode reel
     if (n.getMode() == "reel") // addition de deux nombres reels
     {
         this->m_partieReelle = this->m_partieReelle + n.getPartieReelle();
-        return *this;
+
     }
 
     if (n.getMode() == "rationnel") // addition d'un nombre reel et d'un rationnel
@@ -202,129 +245,556 @@ Nombre& Reel::operator+=(Nombre const& n) // on est en mode reel
 
         */
         double* temp = new double(0);
-        *temp = (double) (n.getPartieReelle() / n.getDenominateurReel());
-        this->m_partieReelle = this->m_partieReelle + (*temp);
+        (*temp) = (double) (n.getPartieReelle() / n.getDenominateurReel());
+        this->m_partieReelle += (*temp);
         delete temp;
-        return *this;
     }
 
     if (n.getMode() == "entier") // addition d'un nombre reel et d'un entier
     {
         this->m_partieReelle += n.getPartieReelle();
-        return *this;
     }
-else return *this;
-}
-
-Nombre& Rationnel::operator+=(Nombre const& n) // on est en mode rationnel
-{
-    this->m_partieReelle = (this->m_partieReelle*n.getDenominateurReel()  + n.getPartieReelle()*this->getDenominateurReel());
-    this->m_denominateurReel = this->m_denominateurReel*n.getDenominateurReel();
     return *this;
 }
 
-Nombre& Entier::operator+=(Nombre const& n) // on est en mode entier
+Nombre& Rationnel::operator+(const Nombre& n) // on est en mode rationnel : Ok !
 {
-    this->m_partieReelle = this->m_partieReelle + n.getPartieReelle();
+    if (n.getMode() == "complexe") // addition d'un nombre rationnel et d'un complexe:
+    {
+        Nombre* c = new Complexe(0,0);
+        //(*c).afficher();
+        (*c)= (*c)+(n); // addition de complexes
+        //(*c).afficher();
+        (*c) = (*c) + (*this); // addition de complexe et rationnel
+        return *c;
+    }
+
+    if (n.getMode() == "reel") // addition d'un nombre rationnel et d'un reel
+    {
+        Nombre* r = new Reel();
+        (*r)=(*r)+n;
+        (*r)=(*r)+(*this);
+        //dynamic casting de reel en rationnel ???
+        return *r;
+    }
+
+    if (n.getMode() == "rationnel") // addition de deux nombres rationnels
+    {
+        this->m_partieReelle = (this->m_partieReelle*n.getDenominateurReel()  + n.getPartieReelle()*this->getDenominateurReel());
+        this->m_denominateurReel = this->m_denominateurReel*n.getDenominateurReel();
+        //simplifier apres addition de deux rationnels: implementer la fonction simplifier à inclure/utiliser dans le constructeur de rationnel
+    }
+
+    if (n.getMode() == "entier") // addition d'un nombre rationnel et d'un entier
+    {
+        this->m_partieReelle = this->m_partieReelle + (this->m_denominateurReel*n.getPartieReelle());
+        // simplifier rationnel
+    }
+
     return *this;
 }
 
-Nombre& Complexe::operator-=(Nombre const& n) // on est en mode complexe
+Nombre& Entier::operator+(const Nombre& n) // on est en mode entier
 {
-    /*if (n.getMode() == "complexe")
-    {*/
+    if (n.getMode() == "complexe") // addtion d'un entier avec un complexe
+    {
+        Nombre* c = new Complexe();
+        (*c)=(*c)+n;
+        (*c)=(*c)+(*this);
+        //dynamic casting de reel en rationnel ???
+        return *c;
+    }
+
+    if (n.getMode() == "reel") // addition d'un entier avec un reel
+    {
+        this->m_partieReelle +=n.getPartieReelle();
+    }
+    if (n.getMode() == "rationnel") // addition d'un entier avec un rationnel
+    {
+        Nombre* q = new Rationnel();
+        (*q)=n; // q = n
+        (*q)=(*q)+(*this); // addition d'un rationnel et d'un entier
+        return *q;
+    }
+
+    if (n.getMode() == "entier") // // addition d'un entier avec un entier
+    {
+        this->m_partieReelle +=n.getPartieReelle();
+    }
+
+    return *this;
+}
+
+Nombre& Complexe::operator-(const Nombre& n) // on est en mode complexe : Ok !
+{
+    if (n.getMode() == "complexe") // soustraction de deux nombres complexes
+    {
         this->m_partieReelle = this->m_partieReelle - n.getPartieReelle();
         this->m_partieImaginaire = this->m_partieImaginaire - n.getPartieImaginaire();
+    }
+
+    if (n.getMode() == "reel") // soustraction d'un nombre complexe et d'un reel
+    {
+        this->m_partieReelle = this->m_partieReelle - n.getPartieReelle();
+    }
+
+    if (n.getMode() == "rationnel") // soustraction d'un nombre complexe et d'un rationnel, on convertit le rationnel en reel avant de l'ajouter au complexe
+    {
+        double* temp = new double(0);
+        *temp = (double) (n.getPartieReelle() / n.getDenominateurReel());
+        this->m_partieReelle -= (*temp);
+        delete temp;
+    }
+
+    if (n.getMode() == "entier") // addition d'un nombre complexe et d'un entier
+    {
+        this->m_partieReelle -= n.getPartieReelle();
+    }
+    return *this;
+
+}
+
+Nombre& Reel::operator-(const Nombre& n) // on est en mode reel
+{
+    if (n.getMode() == "complexe") // soustraction d'un reel et d'un complexe
+    {
+        Nombre* c = new Complexe(m_partieReelle-n.getPartieReelle(), n.getPartieImaginaire());
+        //Nombre* r = new Reel(m_partieReelle);
+        //(*c)=(*c) + n;      // ne pas mettre "*c+=n" : ajouter des parentheses
+        //(*c)= (*c)+(*r);
+        // upcasting de reel en complexe ???
+        //*this = *c;
+        //delete c;
+        //delete r;
+        return *c;
+    }
+
+    if (n.getMode() == "reel") // addition de deux nombres reels
+    {
+        this->m_partieReelle = this->m_partieReelle - n.getPartieReelle();
+
+    }
+
+    if (n.getMode() == "rationnel") // addition d'un nombre reel et d'un rationnel
+    {
+        /*Nombre* temp = new Complexe(*this);
+        *temp+=n;
+        *this=*temp;
         return *this;
-    //}
-}
 
-Nombre& Reel::operator-=(Nombre const& n) // on est en mode reel
-{
-    this->m_partieReelle = this->m_partieReelle - n.getPartieReelle();
+        */
+        double* temp = new double(0);
+        (*temp) = (double) (n.getPartieReelle() / n.getDenominateurReel());
+        this->m_partieReelle -= (*temp);
+        delete temp;
+    }
+
+    if (n.getMode() == "entier") // addition d'un nombre reel et d'un entier
+    {
+        this->m_partieReelle -= n.getPartieReelle();
+    }
     return *this;
 }
 
-Nombre& Rationnel::operator-=(Nombre const& n) // on est en mode rationnel
+Nombre& Rationnel::operator-(const Nombre& n) // on est en mode rationnel : Ok !
 {
-    this->m_partieReelle = (this->m_partieReelle*n.getDenominateurReel()  - n.getPartieReelle()*this->getDenominateurReel());
-    this->m_denominateurReel = this->m_denominateurReel*n.getDenominateurReel();
+    if (n.getMode() == "complexe") // addition d'un nombre rationnel et d'un complexe:
+    {
+        Nombre* c = new Complexe(-n.getPartieReelle(), -n.getPartieImaginaire());
+        (*c) = (*c) + (*this);
+        //double* temp = new double(0);
+        //*temp = (double) (m_partieReelle / m_partieImaginaire);
+        //(*c).afficher();
+        //(*c)= (*c)+(n); // addition de complexes
+        //(*c).afficher();
+        //(*c) = (*c) + (*temp); // addition de complexe et rationnel
+        //delete temp;
+        return *c;
+    }
+
+    if (n.getMode() == "reel") // addition d'un nombre rationnel et d'un reel
+    {
+        Nombre* r = new Reel(-n.getPartieReelle());
+        //(*r)=(*r)+n;
+        (*r)=(*r)+(*this);
+        //dynamic casting de reel en rationnel ???
+        return *r;
+    }
+
+    if (n.getMode() == "rationnel") // addition de deux nombres rationnels
+    {
+        Nombre* q= new Rationnel();
+        q->setPartieReelle((this->m_partieReelle*n.getDenominateurReel()  - n.getPartieReelle()*this->getDenominateurReel()));
+        q->setDenominateurReel(this->m_denominateurReel*n.getDenominateurReel());
+        //simplifier apres addition de deux rationnels: implementer la fonction simplifier à inclure/utiliser dans le constructeur de rationnel
+        return *q;
+    }
+
+    if (n.getMode() == "entier") // addition d'un nombre rationnel et d'un entier
+    {
+        Nombre* q = new Rationnel();
+        q->setPartieReelle(this->m_partieReelle + (this->m_denominateurReel*n.getPartieReelle()));
+        return *q;
+        // simplifier rationnel
+    }
+    //return *this;
+}
+
+Nombre& Entier::operator-(const Nombre& n) // on est en mode entier
+{
+    if (n.getMode() == "complexe") // addtion d'un entier avec un complexe
+    {
+        Nombre* c = new Complexe(-n.getPartieReelle(), -n.getPartieImaginaire()); // ???
+        //(*c)=(*c)+n;
+        (*c)=(*c)+(*this);
+        //dynamic casting de reel en rationnel ???
+        return *c;
+    }
+
+    if (n.getMode() == "reel") // addition d'un entier avec un reel
+    {
+        Nombre* r = new Reel(-n.getPartieReelle());
+        (*r)=(*r)+(*this);
+        return *r ;
+    }
+
+    if (n.getMode() == "rationnel") // addition d'un entier avec un rationnel
+    {
+        Nombre* q = new Rationnel(-n.getPartieReelle(),n.getDenominateurReel());
+        //(*q)=n; // q = n
+        (*q)=(*q)+(*this); // addition d'un rationnel et d'un entier
+        return *q;
+
+    }
+
+    if (n.getMode() == "entier") // // addition d'un entier avec un entier
+    {
+        Nombre* e= new Entier(this->m_partieReelle - n.getPartieReelle());
+        return *e;
+
+    }
+
     return *this;
 }
 
-Nombre& Entier::operator-=(Nombre const& n) // on est en mode entier
+// A partir d'ici jusqu'en bas , c'est bon. EN haut faut juste modifier les operateurs pour qu'ils ne changent pas les deux classes en parametre mais en renvoie une nouvelle allouee dynamiquement
+//
+//
+Nombre& Complexe::operator*(const Nombre& n) // on est en mode complexe : Ok !
 {
-    this->m_partieReelle = this->m_partieReelle - n.getPartieReelle();
-    return *this;
+    if (n.getMode() =="complexe" )
+    {
+        Nombre* c = new Complexe();
+        c->setPartieReelle(n.getPartieReelle()*m_partieReelle - n.getPartieImaginaire()*m_partieImaginaire );
+        c->setPartieImaginaire(n.getPartieReelle()*m_partieImaginaire + n.getPartieImaginaire()*m_partieReelle);
+        return *c;
+    }
+
+    if (n.getMode() == "reel" )
+    {
+        Nombre* c = new Complexe(m_partieReelle*n.getPartieReelle(), m_partieImaginaire*n.getPartieReelle());
+        return *c;
+    }
+
+    if (n.getMode() == "rationnel" )
+    {
+        Nombre* c = new Complexe();
+        double* temp = new double(0);
+        *temp = (double) (n.getPartieReelle() / n.getDenominateurReel() );
+        c->setPartieReelle( (*temp)*(m_partieReelle));
+        c->setPartieImaginaire((*temp)*(m_partieImaginaire));
+        return *c;
+    }
+
+    if (n.getMode() == "entier" )
+    {
+        Nombre* c = new Complexe(m_partieReelle*n.getPartieReelle(), m_partieImaginaire*n.getPartieReelle());
+        return *c;
+
+    }
+
 }
 
-Nombre& Complexe::operator*=(Nombre const& n)
+Nombre& Reel::operator*(const Nombre& n) // on est en mode reel : Ok !
 {
-    double* temp1= new double(0);
-    double* temp2= new double(0);
+    if (n.getMode() =="complexe" )
+    {
+        Nombre* c = new Complexe();
+        *c = n;
+        (*c) = (*c)*(*this);
+        //c->setPartieReelle(n.getPartieReelle()*m_partieReelle - n.getPartieImaginaire()*m_partieImaginaire );
+        //c->setPartieImaginaire(n.getPartieReelle()*m_partieImaginaire + n.getPartieImaginaire()*m_partieReelle);
+        return *c;
+    }
 
-    *temp1=(this->m_partieReelle*n.getPartieReelle())-(this->m_partieImaginaire*n.getPartieImaginaire());
-    *temp2=(this->m_partieReelle*n.getPartieImaginaire())+(this->m_partieImaginaire*n.getPartieReelle());
-    this->m_partieReelle=*temp1;
-    this->m_partieImaginaire=*temp2;
-    delete temp1;
-    delete temp2; // pour libérer l'espace mémoire allou?
-    return *this;
+    if (n.getMode() == "reel" )
+    {
+        Nombre* c = new Reel(m_partieReelle*n.getPartieReelle());
+        return *c;
+    }
+
+    if (n.getMode() == "rationnel" ) // ??? et si le reel est un entier ? faut juste multiplier le reel et le numerateur
+    {
+        Nombre* c = new Reel();
+        double* temp = new double(0);
+        *temp = (double) (n.getPartieReelle() / n.getDenominateurReel() );
+        c->setPartieReelle( (*temp)*(m_partieReelle));
+
+        return *c;
+    }
+
+    if (n.getMode() == "entier" )
+    {
+        Nombre* c = new Reel(m_partieReelle*n.getPartieReelle());
+        return *c;
+
+    }
 }
 
-Nombre& Reel::operator*=(Nombre const& n) // on est en mode reel
+Nombre& Rationnel::operator*(const Nombre& n) // on est en mode rationnel
 {
-    this->m_partieReelle *= n.getPartieReelle();
-    return *this;
+    if (n.getMode() =="complexe" )
+    {
+        Nombre* c = new Complexe();
+        (*c) = n ;
+        (*c) = (*c) * (*this);
+        return *c;
+    }
+
+    if (n.getMode() == "reel" )
+    {
+        Nombre* r = new Reel();
+        (*r) = n;
+        (*r) = (*r) * (*this);
+        return *r;
+    }
+
+    if (n.getMode() == "rationnel" )
+    {
+        Nombre* q = new Rationnel();
+        (*q) = n ;
+        q->setPartieReelle(q->getPartieReelle() * this->getPartieReelle());
+        q->setDenominateurReel(q->getDenominateurReel() * this->getDenominateurReel());
+        return *q;
+    }
+
+    if (n.getMode() == "entier" )
+    {
+        Nombre* c = new Rationnel();
+        (*c) = (*this);
+        c->setPartieReelle(n.getPartieReelle()*(this->getPartieReelle()));
+        return *c;
+    }
 }
 
-Nombre& Rationnel::operator*=(Nombre const& n) // on est en mode rationnel
+Nombre& Entier::operator*(const Nombre& n) // on est en mode entier : Ok !
 {
-    this->m_partieReelle *=n.getPartieReelle();
-    this->m_denominateurReel *=n.getDenominateurReel();
-    return *this;
+    if (n.getMode() =="complexe" )
+    {
+        Nombre* c = new Complexe();
+        c->setPartieReelle(this->getPartieReelle()*n.getPartieReelle());
+        c->setPartieImaginaire(this->getPartieReelle()*n.getPartieImaginaire());
+        return *c;
+    }
+
+    if (n.getMode() =="reel" )
+    {
+        Nombre* r = new Reel();
+        (*r) = n ;
+        (*r) = (*r) * (*this);
+        return *r;
+    }
+
+    if (n.getMode() =="rationnel" )
+    {
+        Nombre* q = new Rationnel();
+        (*q) = n ;
+        (*q) = (*q) * (*this);
+        return *q;
+    }
+
+    if (n.getMode() =="entier" )
+    {
+        Nombre* e = new Entier();
+        e->setPartieReelle(n.getPartieReelle()*this->getPartieReelle());
+        return *e;
+    }
 }
 
-Nombre& Entier::operator*=(Nombre const& n) // on est en mode entier
+Nombre& Complexe::operator/(const Nombre& n)
 {
-    this->m_partieReelle *=n.getPartieReelle();
-    return *this;
+    if (n.getMode()=="complexe")
+    {
+        Nombre* c = new Complexe();
+        double* denominateur= new double(0);
+        *denominateur = ((n.getPartieReelle()*n.getPartieReelle()) + (n.getPartieImaginaire()*n.getPartieImaginaire())); // denominateur de notre nouveau complexe
+
+        c->setPartieReelle((this->m_partieReelle*n.getPartieReelle())+(this->m_partieImaginaire*n.getPartieImaginaire()));
+        c->setPartieImaginaire((this->m_partieImaginaire*n.getPartieReelle())-(this->m_partieReelle*n.getPartieImaginaire()));
+
+        c->setPartieReelle((c->getPartieReelle()) / (*denominateur));
+        c->setPartieImaginaire((c->getPartieImaginaire()) / (*denominateur));
+        delete denominateur ;
+        return *c;
+    }
+
+    if(n.getMode() =="reel")
+    {
+        Nombre* c = new Complexe();
+        Nombre* r = new Reel(1/n.getPartieReelle());
+        //(*r) = n;
+        (*c) = (*this);
+        //double temp = n.getPartieReelle();
+        //temp = (double)(1/(temp));
+        //r->setPartieReelle(temp);
+        (*c) = (*c) * (*r);
+        delete r;
+        //delete temp;
+        return *c;
+    }
+
+    if(n.getMode() =="rationnel")
+    {
+        Nombre* c = new Complexe();
+        (*c) = (*this);
+        Nombre* q = new Rationnel(n.getDenominateurReel(),n.getPartieReelle() );
+        //q->setPartieReelle(n.getDenominateurReel());
+        //q->setDenominateurReel(n.getPartieReelle());
+        (*c) = (*c) * (*q);
+        delete q;
+        return *c;
+    }
+
+    if(n.getMode() =="entier")
+    {
+        Nombre* c = new Complexe();
+        (*c) = (*this);
+        Nombre* q = new Rationnel(1,n.getPartieReelle());
+        (*c) = (*c) * (*q);
+        delete q;
+        return *c;
+    }
 }
 
-Nombre& Complexe::operator/=(Nombre const& n)
+Nombre& Reel::operator/(const Nombre& n) // on est en mode reel : ok!
 {
-    double* temp1= new double(0);
-    double* temp2= new double(0);
+    if (n.getMode() =="complexe")
+    {
+        Nombre* c = new Complexe(n.getPartieReelle(),-n.getPartieImaginaire());
+        double* denominateur= new double(0);
+        *denominateur = ((n.getPartieReelle()*n.getPartieReelle()) + (n.getPartieImaginaire()*n.getPartieImaginaire())); // denominateur de notre nouveau complexe
+        (*c) = (*c) * (*this);
+        (*c).setPartieReelle(c->getPartieReelle()/(*denominateur));
+        (*c).setPartieImaginaire(c->getPartieImaginaire()/(*denominateur));
+        delete denominateur ;
 
-    *temp1=(this->m_partieReelle*n.getPartieReelle())-(this->m_partieImaginaire*n.getPartieImaginaire());
-    *temp2=(this->m_partieReelle*n.getPartieImaginaire())+(this->m_partieImaginaire*n.getPartieReelle());
-    this->m_partieReelle=*temp1;
-    this->m_partieImaginaire=*temp2;
+        return *c;
+    }
 
-    delete temp1;
-    delete temp2;
-    return *this;
+    if(n.getMode()=="reel")
+    {
+        Nombre* r = new Reel(1/n.getPartieReelle());
+        (*r) = (*r) * (*this);
+        return *r;
+    }
+
+    if (n.getMode() == "rationnel")
+    {
+        Nombre* q = new Rationnel(n.getDenominateurReel(), n.getPartieReelle());
+        Nombre* r = new Reel ();
+
+        (*r) = (*q) * (*this);
+        delete q ;
+        return *r;
+    }
+
+    if(n.getMode() =="entier")
+    {
+        Nombre* q = new Rationnel(1, n.getPartieReelle());
+        Nombre* r = new Reel();
+
+        (*r) = (*q) * (*this);
+        delete q;
+        return *r;
+    }
 }
 
-Nombre& Reel::operator/=(Nombre const& n) // on est en mode reel
-{
-    this->m_partieReelle /= n.getPartieReelle();
-    return *this;
+Nombre& Rationnel::operator/(const Nombre& n) // on est en mode rationnel
+{	if (n.getMode() =="complexe")
+    {
+        Nombre* c = new Complexe(n.getPartieReelle(),-n.getPartieImaginaire());
+        double* denominateur= new double(0);
+        Nombre* temp = new Reel(m_partieReelle / m_denominateurReel);
+        *denominateur = ((n.getPartieReelle()*n.getPartieReelle()) + (n.getPartieImaginaire()*n.getPartieImaginaire())); // denominateur de notre nouveau complexe
+        (*c) = (*c) * (*temp);
+        (*c).setPartieReelle(c->getPartieReelle()/(*denominateur));
+        (*c).setPartieImaginaire(c->getPartieImaginaire()/(*denominateur));
+        delete denominateur ;
+        delete temp;
+
+        return *c;
+    }
+
+    if(n.getMode()=="reel")
+    {
+        Nombre* r = new Reel(1/n.getPartieReelle());
+        Nombre* q= new Rationnel(m_partieReelle, m_denominateurReel);
+        (*r) = (*r) * (*q);
+        delete q ;
+        return *r;
+    }
+
+    if (n.getMode() == "rationnel")
+    {
+        Nombre* q = new Rationnel(n.getDenominateurReel(), n.getPartieReelle());
+        (*q) = (*q) * (*this);
+        return *q;
+    }
+
+    if(n.getMode() =="entier")
+    {
+        Nombre* q = new Rationnel (1, n.getPartieReelle());
+        (*q) = (*q) * (*this);
+        return *q;
+    }
+
 }
 
-Nombre& Rationnel::operator/=(Nombre const& n) // on est en mode rationnel
+Nombre& Entier::operator/(const Nombre& n) // on est en mode entier
 {
-    this->m_partieReelle *=n.getDenominateurReel();
-    this->m_denominateurReel *=n.getPartieReelle();
-    return *this;
-}
+    if (n.getMode() =="complexe")
+    {
+        Nombre* c = new Complexe(n.getPartieReelle(),-n.getPartieImaginaire());
+        double* denominateur= new double(0);
+        *denominateur = ((n.getPartieReelle()*n.getPartieReelle()) + (n.getPartieImaginaire()*n.getPartieImaginaire())); // denominateur de notre nouveau complexe
+        (*c) = (*c) * (*this);
+        (*c).setPartieReelle(c->getPartieReelle()/(*denominateur));
+        (*c).setPartieImaginaire(c->getPartieImaginaire()/(*denominateur));
+        delete denominateur ;
 
-Nombre& Entier::operator/=(Nombre const& n) // on est en mode entier ???
-{
-    this->m_partieReelle /=n.getPartieReelle(); /// ??? division de deux entiers doit donner quoi ???
-    return *this;
-}
+        return *c;
+    }
 
+    if(n.getMode()=="reel")
+    {
+        Nombre* r = new Reel(1/n.getPartieReelle());
+        (*r) = (*r) * (*this);
+        return *r;
+    }
+
+    if (n.getMode() == "rationnel")
+    {
+        Nombre* q = new Rationnel(n.getDenominateurReel(), n.getPartieReelle());
+        (*q) = (*q) * (*this);
+        return *q;
+    }
+
+    if(n.getMode() =="entier")
+    {
+        Nombre* r = new Reel(m_partieReelle / n.getPartieReelle());
+        return *r;
+    }
+}
 
 QString Operation::match_indice(int indice){
     switch(indice){
@@ -337,28 +807,28 @@ const Nombre& OperationBinaire::evaluer() const
 {	Nombre* c= new Complexe(0.0,0.0); // pointeur sur nombre qui sera initialis?par le constructeur sans argument
 
     if (this->choix ==1) // on a choisi l'addition
-    {
-        *c+= ex1->evaluer();
-        *c+= ex2->evaluer();
-    }
+        {
+            (*c)= ex1->evaluer();
+            (*c)= (*c) + (ex2->evaluer());
+        }
 
     if (this->choix ==2) // on a choisi la soustraction
-    {
-        *c+= ex1->evaluer();
-        *c-= ex2->evaluer();
-    }
+        {
+            (*c)= ex1->evaluer();
+            (*c)= (*c) - (ex2->evaluer());
+        }
 
     if (this->choix ==3) // on a choisi la multiplication
-    {
-        *c+= ex1->evaluer();
-        *c*= ex2->evaluer();
-    }
+        {
+            (*c)= ex1->evaluer();
+            (*c)= (*c) * (ex2->evaluer());
+        }
 
     if (this->choix ==4) // on a choisi la division
-    {
-        *c+= ex1->evaluer();
-        *c/= ex2->evaluer();
-    }
+        {
+            (*c)= ex1->evaluer();
+            (*c)= (*c) / (ex2->evaluer());
+        }
     return *c;
 }
  Expression* OperationBinaire::evaluer2()
@@ -385,30 +855,30 @@ const Nombre& OperationBinaire::evaluer() const
 
      Nombre* c= new Complexe(); // pointeur sur nombre qui sera initialis?par le constructeur sans argument
 
-    if (this->choix ==1) // on a choisi l'addition
-    {
+     if (this->choix ==1) // on a choisi l'addition
+         {
+             (*c)= ex1->evaluer();
+             (*c)= (*c) + (ex2->evaluer());
+         }
 
-        *c+= ex1->evaluer();
-        *c+= ex2->evaluer();
-    }
+     if (this->choix ==2) // on a choisi la soustraction
+         {
+             (*c)= ex1->evaluer();
+             (*c)= (*c) - (ex2->evaluer());
+         }
 
-    if (this->choix ==2) // on a choisi la soustraction
-    {
-        *c+= ex1->evaluer();
-        *c-= ex2->evaluer();
-    }
+     if (this->choix ==3) // on a choisi la multiplication
+         {
+             (*c)= ex1->evaluer();
+             (*c)= (*c) * (ex2->evaluer());
+         }
 
-    if (this->choix ==3) // on a choisi la multiplication
-    {
-        *c+= ex1->evaluer();
-        *c*= ex2->evaluer();
-    }
+     if (this->choix ==4) // on a choisi la division
+         {
+             (*c)= ex1->evaluer();
+             (*c)= (*c) / (ex2->evaluer());
+         }
 
-    if (this->choix ==4) // on a choisi la division
-    {
-        *c+= ex1->evaluer();
-        *c/= ex2->evaluer();
-    }
     if (c->match_affiche()==1){return new Reel(c->getPartieReelle());}
     else return c;
 }

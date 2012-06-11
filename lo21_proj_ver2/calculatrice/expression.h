@@ -5,6 +5,7 @@
 #include <iostream>
 #include<QRegExp>
 class Nombre;
+class Complexe;
 class Reel;
 class Rationnel;
 class Entier;
@@ -35,14 +36,22 @@ public:
     Constant(QString s):constant(s){}
     Constant(){}
     ~Constant(){}
-    const Nombre& evaluer()const{}
+    const Nombre& evaluer()const
+    {
+        /*Nombre* c= new Complexe(); // ??
+        qDebug("valeur de constant ???");
+        return *c;*/
+        return *this; // ???
+    } // ne retourne rien ??? pkoi ???
+
     void afficher(std::ostream& f=std::cout) const{}
- QString getPropriete(){return constant;}
+ QString getPropriete() { return constant; }
 };
+
 class Nombre: public Expression
 {
 
-    protected: // pour que les mehodes des classes filles puissent y accer
+    protected: // pour que les methodes des classes filles puissent y accer
 
     // ATTRIBUTS
         double m_partieReelle;
@@ -50,6 +59,9 @@ class Nombre: public Expression
         int m_denominateurReel;
         int m_denominateurImaginaire;
         std::string m_mode;
+
+    // METHODE PRIVEE / PROTEGEE
+        void setMode(std::string mode) { m_mode = mode ; } // pour qu'un utilisateur ne puisse jamais changer la nature d'un nombre
 
     public:
 
@@ -72,13 +84,14 @@ class Nombre: public Expression
     /*construction d'un nombre par defaut*/
     Nombre();
 
-    // METHODES CLASSIQUES
-        //bool pReelIntPas();
-        //bool pImagIntNul();
-        //bool denominateurLPas();
+    /*construction par recopie*/
+     /*Nombre(const Nombre& n): m_partieReelle(n.getPartieReelle()),
+            m_partieImaginaire(n.getPartieImaginaire()),
+            m_denominateurReel(n.getDenominateurReel()),
+            m_denominateurImaginaire(n.getDenominateurImaginaire()){} // et l'initialisation de m_mode ??? peut on laisser ça comme ça ?*/
 
-        //optionnel virtual void afficher(std::ostream& f=std::cout) const = 0  ; // doit etre une methode virtuelle pure pour rendre la classe abstraite
-        //*optionnel virtual const Nombre& evaluer() const = 0; /*{ return *this; }*/  // méthode virtuelle de Expression . On a 2 const car passage par référence + méthode const
+    // METHODES CLASSIQUES
+
 
     // ACCESSEURS
         double getPartieReelle() const { return m_partieReelle; }
@@ -97,19 +110,20 @@ class Nombre: public Expression
     // DESTRUCTEURS
 
     // OPERATEURS : a t on besoin de surcharger les opérateurs ? peut etre l'operateur d'affichage vu qu'on va afficher les résultats des calculs ?
-        virtual Nombre& operator+=(Nombre const& n)=0 ;
-        virtual Nombre& operator-=(Nombre const& n) = 0;
-        virtual Nombre& operator*=(Nombre const& n) = 0;
-        virtual Nombre& operator/=(Nombre const& n) = 0;
+        virtual Nombre& operator+(Nombre const& n) = 0;
+        virtual Nombre& operator-(Nombre const& n) = 0;
+        virtual Nombre& operator*(Nombre const& n) = 0;
+        virtual Nombre& operator/(Nombre const& n) = 0;
         virtual QString getPropriete()=0;
 
-       int match_affiche() const{
-            if(this->getPartieImaginaire()==0 &&this->getDenominateurReel()==1){
-            return 1;
+       int match_affiche() const
+       {
+            if(this->getPartieImaginaire()==0 &&this->getDenominateurReel()==1)
+            {
+                return 1;
             }
       }
 };
-
 class Complexe: public Nombre
 {
     public:
@@ -133,10 +147,11 @@ class Complexe: public Nombre
     // DESTRUCTEURS
 
     // OPERATEURS : a t on besoin de surcharger les opérateurs ? peut etre l'operateur d'affichage vu qu'on va afficher les résultats des calculs ?
-        Nombre& operator+=(Nombre const& n) ;
-        Nombre& operator-=(Nombre const& n) ;
-        Nombre& operator*=(Nombre const& n) ;
-        Nombre& operator/=(Nombre const& n) ;
+        Complexe& operator=(const Complexe& c);
+        Nombre& operator+(Nombre const& n) ;
+        Nombre& operator-(Nombre const& n) ;
+        Nombre& operator*(Nombre const& n) ;
+        Nombre& operator/(Nombre const& n) ;
         QString getPropriete(){
              QString s;
           s=QString::number(this->getPartieReelle())+"$"+QString::number(this->getPartieImaginaire());
@@ -144,7 +159,6 @@ class Complexe: public Nombre
 
 
 };
-
 class Reel: public Nombre
 {
     public:
@@ -162,10 +176,11 @@ class Reel: public Nombre
     // DESTRUCTEURS
 
     // OPERATEURS
-        Nombre& operator+=(Nombre const& n);
-        Nombre& operator-=(Nombre const& n);
-        Nombre& operator*=(Nombre const& n);
-        Nombre& operator/=(Nombre const& n);
+        Reel& operator=(const Reel& r);
+        Nombre& operator+(Nombre const& n);
+        Nombre& operator-(Nombre const& n);
+        Nombre& operator*(Nombre const& n);
+        Nombre& operator/(Nombre const& n);
         QString getPropriete(){
                     QString s;
                 s=QString::number(this->getPartieReelle()).replace(".",",");
@@ -197,13 +212,13 @@ class Rationnel: public Nombre
     // DESTRUCTEURS
 
     // OPERATEURS
-        Nombre& operator+=(Nombre const& n);
-        Nombre& operator-=(Nombre const& n);
-        Nombre& operator*=(Nombre const& n) ;
-        Nombre& operator/=(Nombre const& n) ;
+        Rationnel& operator=(const Rationnel& q);
+        Nombre& operator+(Nombre const& n);
+        Nombre& operator-(Nombre const& n);
+        Nombre& operator*(Nombre const& n) ;
+        Nombre& operator/(Nombre const& n) ;
 
 };
-
 class Entier: public Nombre
 {
     public:
@@ -225,10 +240,11 @@ class Entier: public Nombre
     // DESTRUCTEURS
 
     // OPERATEURS
-        Nombre& operator+=(Nombre const& n);
-        Nombre& operator-=(Nombre const& n);
-        Nombre& operator*=(Nombre const& n);
-        Nombre& operator/=(Nombre const& n);
+        Entier& operator=(const Entier& e);
+        Nombre& operator+(const Nombre& n);
+        Nombre& operator-(const Nombre& n);
+        Nombre& operator*(const Nombre& n);
+        Nombre& operator/(const Nombre& n);
 
 };
 

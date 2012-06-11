@@ -9,17 +9,17 @@ class MainWindow;
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+    Q_OBJECT // MACRO Q_OBJECT
     
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = 0); // pourquoi explicit ?
     ~MainWindow();
-    Pile* tempo;
+    Pile* tempo; // pile temporaire ?
     Pile* historique;
     
 private:
     Ui::MainWindow *ui;
-    QPushButton *digitButtons[10];
+    QPushButton *digitButtons[10]; // boutons numériques ???
     bool waitingForOperand;
     void clear();
     void connection();
