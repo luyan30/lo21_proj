@@ -37,13 +37,12 @@ private slots:
     void pileSum();
     void pileMean();
     void pileSwap();
-    void pileFonc();}
+    void pileFonc();
+  void backspaceClicked();}
    /*
     void equalClicked();
     void pointClicked();
     void changeSignClicked();
-    void backspaceClicked();
-
     void clearAll();
     void clearMemory();
     void readMemory();

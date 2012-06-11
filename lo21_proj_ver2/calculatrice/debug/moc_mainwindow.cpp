@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Sun Jun 10 18:23:42 2012
+** Created: Mon Jun 11 10:27:36 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      14,   14, // methods
+      15,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -45,6 +45,7 @@ static const uint qt_meta_data_MainWindow[] = {
      151,   11,   11,   11, 0x08,
      162,   11,   11,   11, 0x08,
      173,   11,   11,   11, 0x08,
+     184,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -55,6 +56,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "annuler()\0evaluation()\0pileCLear()\0"
     "pileDup()\0pileDrop()\0pileSum()\0"
     "pileMean()\0pileSwap()\0pileFonc()\0"
+    "backspaceClicked()\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -77,6 +79,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 11: _t->pileMean(); break;
         case 12: _t->pileSwap(); break;
         case 13: _t->pileFonc(); break;
+        case 14: _t->backspaceClicked(); break;
         default: ;
         }
     }
@@ -115,9 +118,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 14)
+        if (_id < 15)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 15;
     }
     return _id;
 }

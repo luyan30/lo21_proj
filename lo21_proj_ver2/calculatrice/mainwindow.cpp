@@ -8,6 +8,18 @@ annuler();
 MisePile();}
 }
 
+void MainWindow::backspaceClicked()
+{
+    if (waitingForOperand)
+      return;
+    QString tmp=ui->line_command->text();
+     tmp.chop(1);
+    if (tmp.isEmpty()) {
+        tmp = "0";
+        waitingForOperand = true;
+    }
+    ui->line_command->setText(tmp);
+}
 void MainWindow::digitClicked()
 {
     QPushButton *clickedButton = qobject_cast<QPushButton *>(sender());
@@ -191,5 +203,7 @@ connect(ui->clear,SIGNAL(clicked()),this,SLOT(pileCLear()));
   connect(ui->sum,SIGNAL(clicked()),this,SLOT(pileSum()));
   connect(ui->mean,SIGNAL(clicked()),this,SLOT(pileMean()));
   connect(ui->swap,SIGNAL(clicked()),this,SLOT(pileSwap()));
-  connect(ui->confirmer,SIGNAL(clicked()),this,SLOT(pileFonc()));}
+  connect(ui->confirmer,SIGNAL(clicked()),this,SLOT(pileFonc()));
+connect(ui->del,SIGNAL(clicked()),this,SLOT(backspaceClicked()));}
+
 
