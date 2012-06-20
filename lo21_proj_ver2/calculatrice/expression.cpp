@@ -1,4 +1,5 @@
 #include "expression.h"
+
 Nombre::Nombre(double partieReelle, double partieImaginaire): m_mode("complexe"),m_partieReelle(partieReelle),m_partieImaginaire (partieImaginaire),m_denominateurReel(1), m_denominateurImaginaire(1)
 {
 }
@@ -80,6 +81,7 @@ Reel::Reel(double valeur): Nombre(valeur)
 
 Rationnel::Rationnel(int numerateur, int denominateur): Nombre(numerateur, denominateur)
 {
+    simplifier(*this); // pour simplifier le numérateur et le dénominateur
 }
 
 Entier::Entier(int valeur):Nombre(valeur)
@@ -88,45 +90,45 @@ Entier::Entier(int valeur):Nombre(valeur)
 
 
 // Méthodes la variable Complexe
-void Complexe::afficher(std::ostream& f) const	/*affichage d'un complexe*/
+/*void Complexe::afficher(std::ostream& f) const
 {
     if ((this->m_denominateurReel==1)&&(this->m_denominateurReel==1))
         f<<"("<<this->m_partieReelle << ")$(" << this->m_partieImaginaire ;
     else
         f<<"("<<this->m_partieReelle<<"/"<<this->m_denominateurReel << ")$(" << this->m_partieImaginaire << "/" << this->m_denominateurImaginaire << ")" ;
-}
+}*/
 
-const Nombre& Complexe::evaluer() const
+const Complexe &Complexe::evaluer() const
 {
     return *this;
 }
 
-void Reel::afficher(std::ostream& f) const	/*affichage d'un réel*/
+/*void Reel::afficher(std::ostream& f) const
 {
     f<<this->m_partieReelle ;
-}
+}*/
 
-const Reel& Reel::evaluer() const
+const Reel &Reel::evaluer() const
 {
     return *this;
 }
 
-void Rationnel::afficher(std::ostream& f) const	/*affichage d'un rationnel*/
+/*void Rationnel::afficher(std::ostream& f) const
 {
     f<<this->m_partieReelle<<"/"<<this->m_denominateurReel ;
-}
+}*/
 
-const Rationnel& Rationnel::evaluer() const
+ const Rationnel& Rationnel::evaluer() const
 {
     return *this;
 }
 
-void Entier::afficher(std::ostream& f) const
+/*void Entier::afficher(std::ostream& f) const
 {
     f<<this->m_partieReelle ;
-}
+}*/
 
-const Entier& Entier::evaluer() const
+ const Entier& Entier::evaluer() const
 {
     return *this;
 }
@@ -796,15 +798,437 @@ Nombre& Entier::operator/(const Nombre& n) // on est en mode entier
     }
 }
 
-QString Operation::match_indice(int indice){
-    switch(indice){
-    case 1: return "+";
-    default: return "Inconnu";
+Nombre& power ( const Nombre& n, const Nombre& e) // Ok !
+{
+    if (e.getMode() == "entier")
+        {
+            if (n.getMode()=="reel")
+            {
+                Nombre* r = new Reel();
+                double p = pow(n.getPartieReelle(),e.getPartieReelle());
+                r->setPartieReelle(p);
+                return *r;
+            }
+            else if (n.getMode()=="rationnel")
+            {
+                Nombre* r = new Reel();
+                double temp = (double)(n.getPartieReelle()/n.getDenominateurReel());
+                r->setPartieReelle(pow(temp, e.getPartieReelle()));
+                return *r;
+            }
+            else if (n.getMode()=="entier")
+            {
+                 Nombre* r = new Reel();
+                 r->setPartieReelle(pow(n.getPartieReelle(), e.getPartieReelle()));
+                 return *r;
+            }
+            else
+                throw( "operation non valide" ) ;
+
+        }
+        else
+            throw( "operation non valide" ) ;// on n'autorise pas les puissances reelles
+}
+
+Nombre& modulo (const Nombre& e1, const Nombre& e2) // retourne le reste de la division euclidienne
+{
+    if ((e1.getMode() =="entier") && (e2.getMode() == "entier"))
+    {
+        Nombre* e = new Reel() ;
+        e->setPartieReelle((int)(e1.getPartieReelle())%((int)(e2.getPartieReelle())));
+        return *e;
+    }
+    else
+        throw ("erreur: on ne peut effectuer d'operation sur les nombres entres en argument") ;
+}
+
+Nombre& inversionSigne(const Nombre& n) //
+{
+    if (n.getMode()=="complexe")
+    {
+        Nombre* c = new Complexe(-(n.getPartieReelle()),-(n.getPartieImaginaire()));
+        return *c;
+    }
+    else if (n.getMode()=="reel")
+    {
+        Nombre* r = new Reel(-(n.getPartieReelle()));
+        return *r;
+    }
+    else if (n.getMode()=="rationnel")
+    {
+        Nombre* q = new Rationnel(-(n.getPartieReelle()),(n.getDenominateurReel()));
+        return *q;
+    }
+    else if (n.getMode()=="entier")
+    {
+        Nombre* e = new Entier(-(n.getPartieReelle()));
+        return *e;
+    }
+    else
+        throw("operation non valide");
+}
+
+Nombre& tangenteHyperbolique(const Nombre& n)
+{
+    if (n.getMode()=="reel")
+    {
+        Nombre* r = new Reel(tanh(n.getPartieReelle()));
+        return *r;
+    }
+    else if (n.getMode()=="rationnel")
+    {
+        double* temp = new double(n.getPartieReelle()/n.getDenominateurReel());
+        Nombre* q = new Reel(tanh(*temp));
+        delete temp ;
+        return *q;
+    }
+    else if (n.getMode()=="entier")
+    {
+        Nombre* e = new Entier(tanh(n.getPartieReelle()));
+        return *e;
+    }
+    else
+        throw("operation non valide");
+}
+
+Nombre& cosinus(const Nombre& n)
+{
+    if (n.getMode()=="reel")
+    {
+        Nombre* r = new Reel(cos(n.getPartieReelle()));
+        return *r;
+    }
+    else if (n.getMode()=="rationnel")
+    {
+        double* temp = new double(n.getPartieReelle()/n.getDenominateurReel());
+        Nombre* q = new Reel(cos(*temp));
+        delete temp ;
+        return *q;
+    }
+    else if (n.getMode()=="entier")
+    {
+        Nombre* e = new Entier(cos(n.getPartieReelle()));
+        return *e;
+    }
+    else
+        throw("operation non valide");
+}
+
+Nombre& sinus(const Nombre& n) // par defaut les angles sont en radian
+{
+    if (n.getMode()=="reel")
+    {
+        Nombre* r = new Reel(sin(n.getPartieReelle()));
+        return *r;
+    }
+    else if (n.getMode()=="rationnel")
+    {
+        double* temp = new double(n.getPartieReelle()/n.getDenominateurReel());
+        Nombre* q = new Reel(sin(*temp));
+        delete temp ;
+        return *q;
+    }
+    else if (n.getMode()=="entier")
+    {
+        Nombre* e = new Entier(sin(n.getPartieReelle()));
+        return *e;
+    }
+    else
+        throw("operation non valide");
+}
+
+Nombre& cosinusHyperbolique(const Nombre& n)
+{
+    if (n.getMode()=="reel")
+    {
+        Nombre* r = new Reel(cosh(n.getPartieReelle()));
+        return *r;
+    }
+    else if (n.getMode()=="rationnel")
+    {
+        double* temp = new double(n.getPartieReelle()/n.getDenominateurReel());
+        Nombre* q = new Reel(cosh(*temp));
+        delete temp ;
+        return *q;
+    }
+    else if (n.getMode()=="entier")
+    {
+        Nombre* e = new Entier(cosh(n.getPartieReelle()));
+        return *e;
+    }
+    else
+        throw("operation non valide");
+}
+
+Nombre& sinusHyperbolique(const Nombre& n)
+{
+    if (n.getMode()=="reel")
+    {
+        Nombre* r = new Reel(sinh(n.getPartieReelle()));
+        return *r;
+    }
+    else if (n.getMode()=="rationnel")
+    {
+        double* temp = new double(n.getPartieReelle()/n.getDenominateurReel());
+        Nombre* q = new Reel(sinh(*temp));
+        delete temp ;
+        return *q;
+    }
+    else if (n.getMode()=="entier")
+    {
+        Nombre* e = new Entier(sinh(n.getPartieReelle()));
+        return *e;
+    }
+    else
+        throw("operation non valide");
+}
+
+Nombre& tangente(const Nombre& n)
+{
+    if (n.getMode()=="reel")
+    {
+        Nombre* r = new Reel(tan(n.getPartieReelle()));
+        return *r;
+    }
+    else if (n.getMode()=="rationnel")
+    {
+        double* temp = new double(n.getPartieReelle()/n.getDenominateurReel());
+        Nombre* q = new Reel(tan(*temp));
+        delete temp ;
+        return *q;
+    }
+    else if (n.getMode()=="entier")
+    {
+        Nombre* e = new Entier(tan(n.getPartieReelle()));
+        return *e;
+    }
+    else
+        throw("operation non valide");
+}
+
+Nombre& logarithme(const Nombre& n)
+{
+    if (n.getMode()=="reel")
+    {
+        Nombre* r = new Reel(log(n.getPartieReelle()));
+        return *r;
+    }
+    else if (n.getMode()=="rationnel")
+    {
+        double* temp = new double(n.getPartieReelle()/n.getDenominateurReel());
+        Nombre* q = new Reel(log(*temp));
+        delete temp ;
+        return *q;
+    }
+    else if (n.getMode()=="entier")
+    {
+        Nombre* e = new Entier(log(n.getPartieReelle()));
+        return *e;
+    }
+    else
+        throw("operation non valide");
+}
+
+Nombre& inverse(const Nombre& n)
+{
+    if (n.getMode()=="reel")
+    {
+        Nombre* r = new Reel((double)1/n.getPartieReelle());
+        return *r;
+    }
+    else if (n.getMode()=="rationnel")
+    {
+        Nombre* q = new Rationnel(n.getDenominateurReel(),n.getPartieReelle());
+        return *q;
+    }
+    else if (n.getMode()=="entier")
+    {
+        Nombre* e = new Rationnel(1,n.getPartieReelle());
+        return *e;
+    }
+    else
+        throw("operation non valide");
+}
+
+Nombre& racineCarree(const Nombre& n)
+{
+    if (n.getMode()=="reel")
+    {
+        Nombre* r = new Reel(sqrt(n.getPartieReelle()));
+        return *r;
+    }
+    else if (n.getMode()=="rationnel")
+    {
+        double* temp = new double(n.getPartieReelle()/n.getDenominateurReel());
+        Nombre* q = new Reel(sqrt(*temp));
+        delete temp ;
+        return *q;
+    }
+    else if (n.getMode()=="entier")
+    {
+        Nombre* e = new Reel(sqrt(n.getPartieReelle()));
+        return *e;
+    }
+    else
+        throw("operation non valide");
+}
+
+Nombre& fonctionCarree(const Nombre& n)
+{
+    if (n.getMode()=="complexe")
+    {
+        Nombre* r = new Complexe();
+        (*r) = n;
+        (*r) = (*r) * (*r);
+        //(*r) = dynamic_cast<Nombre&> n * n;
+        return *r;
+    }
+
+    else if (n.getMode()=="reel")
+    {
+        Nombre* r = new Reel();
+        //(*r) = n * n;
+        (*r) = n;
+        (*r) = (*r) * (*r);
+        return *r;
+    }
+
+    else if (n.getMode()=="rationnel")
+    {
+        Nombre* r = new Rationnel();
+        //(*r) = n * n;
+        (*r) = n;
+        (*r) = (*r) * (*r);
+        return *r;
+
+    }
+    else if (n.getMode()=="entier")
+    {
+        Nombre* r = new Entier();
+        //(*r) = n * n;
+        (*r) = n;
+        (*r) = (*r) * (*r);
+        return *r;
+    }
+    else
+        throw("operation non valide");
+}
+
+Nombre& fonctionCube(const Nombre& n)
+{
+    if (n.getMode()=="complexe")
+    {
+        Nombre* r = new Complexe();
+        (*r) = n;
+        (*r) = (*r) * (*r) * (*r);
+        //(*r) = dynamic_cast<Nombre&> n * n;
+        return *r;
+    }
+
+    else if (n.getMode()=="reel")
+    {
+        Nombre* r = new Reel();
+        //(*r) = n * n;
+        (*r) = n;
+        (*r) = (*r) * (*r) * (*r);
+        return *r;
+    }
+
+    else if (n.getMode()=="rationnel")
+    {
+        Nombre* r = new Rationnel();
+        //(*r) = n * n;
+        (*r) = n;
+        (*r) = (*r) * (*r) * (*r);
+        return *r;
+
+    }
+    else if (n.getMode()=="entier")
+    {
+        Nombre* r = new Entier();
+        //(*r) = n * n;
+        (*r) = n;
+        (*r) = (*r) * (*r) * (*r);
+        return *r;
+    }
+    else
+        throw("operation non valide");
+}
+
+Nombre& logarithme10(const Nombre& n)
+{
+    if (n.getMode()=="reel")
+    {
+        Nombre* r = new Reel(log10(n.getPartieReelle()));
+        return *r;
+    }
+    else if (n.getMode()=="rationnel")
+    {
+        double* temp = new double(n.getPartieReelle()/n.getDenominateurReel());
+        Nombre* q = new Reel(log10(*temp));
+        delete temp ;
+        return *q;
+    }
+    else if (n.getMode()=="entier")
+    {
+        Nombre* e = new Entier(log10(n.getPartieReelle()));
+        return *e;
+    }
+    else
+        throw("operation non valide");
+}
+
+Nombre& factoriel(const Nombre&/*entier*/ n)
+{
+    if (n.getMode()=="entier")
+    {
+        int fact(1);
+        int i(0);
+        for (int i = 1; i<n.getPartieReelle()+1;i++)
+        {
+            fact *= i;
+        }
+        Nombre* e = new Entier(fact);
+        return *e;
+    }
+    else
+        throw("operation non valide");
+}
+
+int pgcd (int a, int b)
+{
+    while (b != 0)
+    {
+        const int t = b;
+        b = a%b;
+        a=t;
+    }
+    return a;
+}
+
+void simplifier (Rationnel& r)
+{
+    int p(0);
+    p = pgcd (r.getPartieReelle(), r.getDenominateurReel());
+    r.setPartieReelle(r.getPartieReelle()/p);
+    r.setDenominateurReel(r.getDenominateurReel()/p);
+}
+
+QString Operation::match_indice(int indice)
+{
+    switch(indice)
+    {
+        case 1: return "+";
+        case 2: return "-";
+        case 3: return "*";
+        case 4: return "/";
+        default: return "Inconnu";
     };
 
 }
+
 const Nombre& OperationBinaire::evaluer() const
-{	Nombre* c= new Complexe(0.0,0.0); // pointeur sur nombre qui sera initialis?par le constructeur sans argument
+{	Nombre* c= new Complexe(); // pointeur sur nombre qui sera initialis?par le constructeur sans argument
 
     if (this->choix ==1) // on a choisi l'addition
         {
@@ -829,37 +1253,69 @@ const Nombre& OperationBinaire::evaluer() const
             (*c)= ex1->evaluer();
             (*c)= (*c) / (ex2->evaluer());
         }
+    if (this->choix ==5) // on a choisi pow
+        {
+            /*Nombre* r= new Reel();
+            (*r)= ex1->evaluer();
+            (*r)= power(*c, (ex2->evaluer()));*/
+             Nombre* e = new Reel();
+
+             (*e)= (power(ex1->evaluer(), ex2->evaluer()));
+             return *e;
+        }
+    if (this->choix ==6) // on a choisi mod
+        {
+            Nombre* e = new Entier();
+            (*e) = (modulo(ex1->evaluer(), ex2->evaluer()));
+            return *e;
+        }
+
     return *c;
 }
- Expression* OperationBinaire::evaluer2()
- {	if (this->ex1->getPropriete().contains("'")||this->ex2->getPropriete().contains("'"))
-     { QString s1;
-       QString s2;
-       QRegExp rx("^'(.*)'$");
-        if( this->ex1->getPropriete().contains("'"))
-         {   rx.indexIn(this->ex1->getPropriete());
-             s1=rx.cap(1);}
-        else {s1=ex1->getPropriete();}
-         if (this->ex2->getPropriete().contains("'"))
-              {
-                  rx.indexIn(this->ex2->getPropriete());
-                   s2=rx.cap(1);
-              }
+
+Expression* OperationBinaire::evaluer2() // à tester et à vérifier pour tous les cas
+ {	if (this->ex1->getPropriete().contains("'")||this->ex2->getPropriete().contains("'")) // si les expressions sont de type constantes i.e si elles contiennent << ' >>
+     {
+         QString s1;
+         QString s2;
+         QRegExp rx("^'(.*)'$");
+
+         //expression 1
+         if( this->ex1->getPropriete().contains("'")) // tests sur la premiere expression de l'operation
+         {
+             rx.indexIn(this->ex1->getPropriete()); // ???
+             s1=rx.cap(1);
+         }
          else
-         {s2=ex2->getPropriete();}
+         {
+             s1=ex1->getPropriete();
+         }
+
+         //expression 2
+         if (this->ex2->getPropriete().contains("'")) // tests sur la deuxiemee expression de l'operation
+         {
+             rx.indexIn(this->ex2->getPropriete());
+             s2=rx.cap(1);
+         }
+         else
+         {
+             s2=ex2->getPropriete();
+         }
+
          int indice=this->choix;
          QString s=this->match_indice(indice);
 
          return new Constant("'"+s1+" "+s2+" "+s+"'");
      }
 
-     Nombre* c= new Complexe(); // pointeur sur nombre qui sera initialis?par le constructeur sans argument
+     Nombre* c= new Complexe(); // pointeur sur nombre qui sera initialise par le constructeur sans argument
 
      if (this->choix ==1) // on a choisi l'addition
          {
-             (*c)= ex1->evaluer();
-             (*c)= (*c) + (ex2->evaluer());
+         (*c)= ex1->evaluer();
+         (*c)= (*c) + (ex2->evaluer());
          }
+    // else throw ("operation non valide");
 
      if (this->choix ==2) // on a choisi la soustraction
          {
@@ -878,24 +1334,123 @@ const Nombre& OperationBinaire::evaluer() const
              (*c)= ex1->evaluer();
              (*c)= (*c) / (ex2->evaluer());
          }
+     if (this->choix ==5) // on a choisi pow
+         {
+             Nombre* r= new Reel();
+             (*r)= ex1->evaluer();
+             (*r)= power(*c, (ex2->evaluer()));
+              Nombre* e =&(power(ex1->evaluer(), ex2->evaluer()));
+              *c = *e ;
 
-    if (c->match_affiche()==1){return new Reel(c->getPartieReelle());}
-    else return c;
-}
+
+             // return e;
+         }
+     if (this->choix ==6) // on a choisi mod
+         {
+             Nombre* e = new Entier();
+             (*e) = (modulo(ex1->evaluer(), ex2->evaluer()));
+             return e;
+         }
+
+     if (c->match_affiche()==1) // ???
+     {
+        return new Reel(c->getPartieReelle());
+     }
+    else
+        return c;
+ }
+
+
 const Nombre& OperationUnaire::evaluer() const
 {
-    Nombre* c=new Complexe();
-    return *c;
+    if (this->choix ==7) // on a choisi inversion signe
+            {
+                //Nombre* e = new Complexe();// ???
+                Nombre* e = &(inversionSigne(ex1->evaluer())); // on initialise le pointeur avec l'adresse d'un nombre
+                return *e;
+            }
+         else if (this->choix ==8) // on a choisi sinus
+            {
+                // e = new Reel();// ???
+                Nombre* e = &(sinus(ex1->evaluer()));
+                return *e;
+            }
+         else if (this->choix ==9) // on a choisi cosinus
+            {
+                Nombre* e = &(cosinus(ex1->evaluer()));
+                return *e;
+            }
+         else if (this->choix ==10) // on a choisi tangente
+            {
+                Nombre* e =&(tangente(ex1->evaluer()));
+                return *e;
+            }
+         else if (this->choix ==11) // on a choisi sinusHyperbolique
+            {
+                Nombre* e = &(sinusHyperbolique(ex1->evaluer()));
+                return *e;
+            }
+         else if (this->choix ==12) // on a choisi cosinusHyperbolique
+            {
+                Nombre* e = &(cosinusHyperbolique(ex1->evaluer()));
+                return *e;
+            }
+         else if (this->choix ==13) // on a choisi tangenteHyperbolique
+            {
+                Nombre* e = &(tangenteHyperbolique(ex1->evaluer()));
+                return *e;
+            }
+         else if (this->choix ==14) // on a choisi logarithme népérien (log)
+            {
+                Nombre* e = &(logarithme(ex1->evaluer()));
+                return *e;
+            }
+         else if (this->choix ==15) // on a choisi logarithme décimal (log à base 10)
+            {
+                Nombre* e = &(logarithme10(ex1->evaluer()));
+                return *e;
+            }
+         else if (this->choix ==16) // on a choisi inverse
+            {
+                Nombre* e = &(inverse(ex1->evaluer()));
+                return *e;
+            }
+         else if (this->choix ==17) // on a choisi racineCarree
+            {
+                Nombre* e = &(racineCarree(ex1->evaluer()));
+                return *e;
+            }
+         else if (this->choix ==18) // on a choisi fonctionCarree
+            {
+                Nombre* e = &(fonctionCarree(ex1->evaluer()));
+                return *e;
+            }
+         else if (this->choix ==19) // on a choisi fonctionCube
+            {
+                Nombre* e = &(fonctionCube(ex1->evaluer()));
+                return *e;
+            }
+         else if (this->choix ==20) // on a choisi factoriel
+            {
+                Nombre* e = &(factoriel(ex1->evaluer()));
+                return *e;
+            }
+         else throw("operation non geree" ) ;
 }
 
-void OperationUnaire::afficher(std::ostream& f) const
+/*void OperationUnaire::afficher(std::ostream& f) const
 {
     f<< "Operation Unaire " << std::endl ;
+}*/
 
-}
-
-void OperationBinaire::afficher(std::ostream& f) const
+/*void OperationBinaire::afficher(std::ostream& f) const
 {
     f<< "Operation Binaire " << std::endl ;
 
+}*/
+
+const Nombre& Constant::evaluer() const // a revoir
+{
+    Nombre* c = new Complexe();
+    return *c;
 }

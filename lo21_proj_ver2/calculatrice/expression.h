@@ -4,11 +4,14 @@
 #include<QString>
 #include <iostream>
 #include<QRegExp>
+#include<Qdebug>
+#include <math.h> // bibliotheque mathematique
 class Nombre;
 class Complexe;
 class Reel;
 class Rationnel;
 class Entier;
+
 class Expression
 {
 private:
@@ -19,7 +22,7 @@ public:
 
     // METHODES CLASSIQUES
     virtual const Nombre& evaluer() const = 0 ; // ?
-    virtual void afficher(std::ostream& f=std::cout) const = 0  ;
+    //virtual void afficher(std::ostream& f=std::cout) const = 0  ;
     virtual QString getPropriete()=0;
 
     // ACCESSEURS
@@ -28,25 +31,7 @@ public:
     virtual ~Expression(){} // ?
 
 };
-class Constant:public Expression{
-protected:
-    QString constant;
-public:
-    QString getConstant(){return constant;}
-    Constant(QString s):constant(s){}
-    Constant(){}
-    ~Constant(){}
-    const Nombre& evaluer()const
-    {
-        /*Nombre* c= new Complexe(); // ??
-        qDebug("valeur de constant ???");
-        return *c;*/
-        return *this; // ???
-    } // ne retourne rien ??? pkoi ???
 
-    void afficher(std::ostream& f=std::cout) const{}
- QString getPropriete() { return constant; }
-};
 
 class Nombre: public Expression
 {
@@ -110,20 +95,44 @@ class Nombre: public Expression
     // DESTRUCTEURS
 
     // OPERATEURS : a t on besoin de surcharger les opérateurs ? peut etre l'operateur d'affichage vu qu'on va afficher les résultats des calculs ?
-        virtual Nombre& operator+(Nombre const& n) = 0;
-        virtual Nombre& operator-(Nombre const& n) = 0;
-        virtual Nombre& operator*(Nombre const& n) = 0;
-        virtual Nombre& operator/(Nombre const& n) = 0;
-        virtual QString getPropriete()=0;
+        virtual Nombre& operator+(const Nombre& n) = 0;
+        virtual Nombre& operator-(const Nombre& n) = 0;
+        virtual Nombre& operator*(const Nombre& n) = 0;
+        virtual Nombre& operator/(const Nombre& n) = 0;
+       // virtual QString getPropriete()=0; // convertit le nombre en string en respectant l'affichage correct
 
-       int match_affiche() const
+       int match_affiche() const // pour quoi faire ?
        {
             if(this->getPartieImaginaire()==0 &&this->getDenominateurReel()==1)
             {
                 return 1;
-            }
-      }
+            } // et sinon ???
+       }
 };
+class Constant:public Expression // pour les expressions constantes
+{
+    protected:
+       QString constant;
+    public:
+       QString getConstant()
+       {
+           return constant;
+       }
+        Constant(QString s):constant(s)
+       {
+       }
+
+        //Constant(){} // ??
+      // ~Constant(){}
+    const Nombre& evaluer() const ;// convertir un QString en Nombre&, n'est ce pas possible ?
+
+   // void afficher(std::ostream& f=std::cout) const{}
+    QString getPropriete()// pareil que getContant() ici !
+    {
+         return constant;
+    }
+};
+
 class Complexe: public Nombre
 {
     public:
@@ -139,8 +148,14 @@ class Complexe: public Nombre
 
 
     // METHODES REDEFINIES
-        void afficher(std::ostream& f=std::cout) const  ;
-        const Nombre& evaluer() const ;
+       // void afficher(std::ostream& f=std::cout) const  ;
+        const Complexe& evaluer() const ;
+        QString getPropriete()
+        {
+            QString s;
+            s=(QString::number(this->getPartieReelle())+"$"+QString::number(this->getPartieImaginaire()));
+            return s;
+        }
 
     //ACCESSEURS
 
@@ -148,17 +163,15 @@ class Complexe: public Nombre
 
     // OPERATEURS : a t on besoin de surcharger les opérateurs ? peut etre l'operateur d'affichage vu qu'on va afficher les résultats des calculs ?
         Complexe& operator=(const Complexe& c);
-        Nombre& operator+(Nombre const& n) ;
-        Nombre& operator-(Nombre const& n) ;
-        Nombre& operator*(Nombre const& n) ;
-        Nombre& operator/(Nombre const& n) ;
-        QString getPropriete(){
-             QString s;
-          s=QString::number(this->getPartieReelle())+"$"+QString::number(this->getPartieImaginaire());
-                                return s;}
+        Nombre& operator+(const Nombre& n) ;
+        Nombre& operator-(const Nombre& n) ;
+        Nombre& operator*(const Nombre& n) ;
+        Nombre& operator/(const Nombre& n) ;
+
 
 
 };
+
 class Reel: public Nombre
 {
     public:
@@ -169,22 +182,25 @@ class Reel: public Nombre
     // METHODES CLASSIQUEs
 
     // METHODES REDEFINIES
-        void afficher(std::ostream& f=std::cout) const  ;
+     //   void afficher(std::ostream& f=std::cout) const  ;
         const Reel& evaluer() const ;
+        QString getPropriete()
+        {
+            QString s;
+            s=QString::number(this->getPartieReelle()).replace(".",","); // remplace le point par une virgule !
+            return s;
+        }
 
 
     // DESTRUCTEURS
 
     // OPERATEURS
         Reel& operator=(const Reel& r);
-        Nombre& operator+(Nombre const& n);
-        Nombre& operator-(Nombre const& n);
-        Nombre& operator*(Nombre const& n);
-        Nombre& operator/(Nombre const& n);
-        QString getPropriete(){
-                    QString s;
-                s=QString::number(this->getPartieReelle()).replace(".",",");
-                                       return s;}
+        Nombre& operator+(const Nombre& n);
+        Nombre& operator-(const Nombre& n);
+        Nombre& operator*(const Nombre& n);
+        Nombre& operator/(const Nombre& n);
+
 
 };
 
@@ -198,13 +214,14 @@ class Rationnel: public Nombre
     // METHODES CLASSIQUEs
 
     // METHODES REDEFINIES
-        void afficher(std::ostream& f=std::cout) const  ;
+    //    void afficher(std::ostream& f=std::cout) const  ;
         const Rationnel& evaluer() const ;
-        QString getPropriete(){
+        QString getPropriete()
+        {
             QString s;
             s=QString::number(this->getPartieReelle())+"/"+QString::number(this->getDenominateurReel());
             return s;
-            }
+        }
 
     // ACCESSEURS
 
@@ -213,12 +230,13 @@ class Rationnel: public Nombre
 
     // OPERATEURS
         Rationnel& operator=(const Rationnel& q);
-        Nombre& operator+(Nombre const& n);
-        Nombre& operator-(Nombre const& n);
-        Nombre& operator*(Nombre const& n) ;
-        Nombre& operator/(Nombre const& n) ;
+        Nombre& operator+(const Nombre& n);
+        Nombre& operator-(const Nombre& n);
+        Nombre& operator*(const Nombre& n) ;
+        Nombre& operator/(const Nombre& n) ;
 
 };
+
 class Entier: public Nombre
 {
     public:
@@ -228,11 +246,12 @@ class Entier: public Nombre
     // METHODES CLASSIQUES
 
     // METHODES REDEFINIES
-        void afficher(std::ostream& f=std::cout) const  ;
+     //   void afficher(std::ostream& f=std::cout) const  ;
         const Entier& evaluer() const ;
-        QString getPropriete(){
+        QString getPropriete()
+        {
               return QString::number(this->getPartieReelle());
-            }
+        }
 
     // ACCESSEURS
 
@@ -277,17 +296,43 @@ class Radian: public Nombre
 };    */
 
 
+
+int pgcd (int a, int b);
+void simplifier (Rationnel& r);
+Nombre&/*double*/ power( const Nombre& n, const Nombre& e); // ok en theorie mais provoque une erreur: probleme dans traitment ...
+Nombre&/*int*/ modulo(const Nombre& e1, const Nombre& e2); // ok en theorie mais provoque une erreur au bout d'un certain temps ...
+Nombre& inversionSigne(const Nombre& n); // ok !
+Nombre& sinus(const Nombre& n) ; // fait    ok
+Nombre& cosinus(const Nombre& n) ; // fait ok
+Nombre& tangente(const Nombre& n) ; // fait ok
+Nombre& sinusHyperbolique(const Nombre& n) ; // fait ok
+Nombre& cosinusHyperbolique(const Nombre& n) ; // fait ok
+Nombre& tangenteHyperbolique(const Nombre& n) ; // fait ok
+Nombre& logarithme(const Nombre& n)  ; // fait ok
+Nombre& inverse(const Nombre& n) ; // fait ok
+Nombre& racineCarree(const Nombre& n) ; // fait
+Nombre& fonctionCarree(const Nombre& n) ; // fait ok
+Nombre& logarithme10(const Nombre& n) ;// fait ok
+Nombre& fonctionCube(const Nombre& n) ; //fait : à tester ok
+Nombre& factoriel(const Nombre& n)  ; // fait : ok
+// reste: exceptions , diagramme de sequence, rapport, integrer retablir et annuler, fonction traitement et eval ?
+
+
+
+
 class Operation : public Expression
 {
 protected:
     int choix;
 public:
    // CONSTRUCTEURS
+     Operation( int indice): choix(indice){}
+
   //  Operation(Expression* x1,Expression* x2,int indice):ex1(x1),ex2(x2),choix(indice){}
   //  Operation(Expression* x1, int indice):ex1(x1), choix(indice), ex2(0){}
- Operation( int indice): choix(indice){}
- int getIndice(){return choix;}
-  QString match_indice(int indice);
+
+ int getIndice() const { return choix; }
+  QString match_indice(int indice); // ???
     //Expression* evaluer() const;
 };
 
@@ -296,19 +341,24 @@ class OperationBinaire : public Operation // classe concrete
 private:
     Expression* ex1;
     Expression* ex2;
+
 public:
 
     // CONSTRUCTEURS
     OperationBinaire(Expression* x1,Expression* x2,int indice):Operation(indice),ex1(x1),ex2(x2){} // une operation binaire contient deux "expressions"
-  Expression* evaluer2();
+
+
     // METHODES REDEFINIES
     const Nombre& evaluer() const  ; // ?
-    void afficher(std::ostream& f=std::cout) const;
-    QString getPropriete(){
+    //void afficher(std::ostream& f=std::cout) const;
+    QString getPropriete() // va renvoyer un nombre ???
+    {
         return this->match_indice(this->getIndice());
-        }
-    QString getResult(){return this->evaluer2()->getPropriete();}
+    }
 
+    //METHODES CLASSIQUES
+    QString getResult()  { return this->evaluer2()->getPropriete(); } // retourne le resultat de l'operation sous forme de string ???
+    Expression* evaluer2();
 
     //Expression* evaluer() const;
 };
@@ -317,6 +367,7 @@ class OperationUnaire : public Operation // classe concrete
 {
 private:
     Expression* ex1;
+
 public:
 
     // CONSTRUCTEURS
@@ -324,12 +375,14 @@ public:
 
     // METHODES REDEFINIES
     const Nombre& evaluer() const ;
+    QString getPropriete() // va renvoyer un nombre ???
+    {
+        return this->match_indice(this->getIndice());
+    }
 
    //Expression* evaluer()const;// ?
-    void afficher(std::ostream& f=std::cout) const ;
-    QString getPropriete(){
-        return this->match_indice(this->getIndice());
-        }
+    //void afficher(std::ostream& f=std::cout) const ;
+
     //QString getResult(){return this->evaluer().getPropriete();}
     //Expression* evaluer() const;
 };
