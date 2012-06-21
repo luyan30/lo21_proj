@@ -1,0 +1,222 @@
+\section{Pile Class Reference}
+\label{class_pile}\index{Pile@{Pile}}
+
+
+{\ttfamily \#include $<$pile.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Q\-String {\bf get\-\_\-result} ()
+\item 
+Q\-String {\bf set\-\_\-result} (Q\-String s)
+\item 
+Q\-Stack$<$ {\bf Expression} $\ast$ $>$ {\bf get\-Element} ()
+\item 
+Q\-Stack$<$ Q\-String $>$ {\bf get\-Aff} ()
+\item 
+bool {\bf traitement} (Q\-String commande)
+\item 
+void {\bf swap} (int x, int y)
+\item 
+void {\bf sum} (int x)
+\item 
+void {\bf mean} (int x)
+\item 
+void {\bf clear} ()
+\item 
+void {\bf dup} ()
+\item 
+void {\bf drop} ()
+\item 
+void {\bf annuler} ()
+\item 
+void {\bf retablir} ()
+\item 
+void {\bf empiler\-\_\-\-Aff} (Q\-String s)
+\item 
+void {\bf empiler} ({\bf Expression} $\ast$s)
+\item 
+{\bf Expression} $\ast$ {\bf depiler} ()
+\item 
+void {\bf afficher} ()
+\item 
+Q\-String {\bf depiler\-\_\-\-Aff} ()
+\item 
+{\bf Pile} ()
+\item 
+{\bf $\sim$\-Pile} ()
+\item 
+int {\bf get\-\_\-m\-\_\-nombre\-Element} () const 
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Q\-Stack$<$ Q\-String $>$ {\bf Afficheur}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Pile@{Pile}!Pile@{Pile}}
+\index{Pile@{Pile}!Pile@{Pile}}
+\subsubsection[{Pile}]{\setlength{\rightskip}{0pt plus 5cm}Pile\-::\-Pile (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_pile_ab44e927107b28f5f3ac7697d10e0a739}
+\index{Pile@{Pile}!$\sim$\-Pile@{$\sim$\-Pile}}
+\index{$\sim$\-Pile@{$\sim$\-Pile}!Pile@{Pile}}
+\subsubsection[{$\sim$\-Pile}]{\setlength{\rightskip}{0pt plus 5cm}Pile\-::$\sim$\-Pile (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_pile_ab2d1398d675586ff34994e2b109df152}
+
+
+\subsection{Member Function Documentation}
+\index{Pile@{Pile}!afficher@{afficher}}
+\index{afficher@{afficher}!Pile@{Pile}}
+\subsubsection[{afficher}]{\setlength{\rightskip}{0pt plus 5cm}void Pile\-::afficher (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_pile_ade235ddd6a30f0920039690093ddfc33}
+\index{Pile@{Pile}!annuler@{annuler}}
+\index{annuler@{annuler}!Pile@{Pile}}
+\subsubsection[{annuler}]{\setlength{\rightskip}{0pt plus 5cm}void Pile\-::annuler (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_pile_af8efea7a91f6403eab295577004ae620}
+\index{Pile@{Pile}!clear@{clear}}
+\index{clear@{clear}!Pile@{Pile}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void Pile\-::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_pile_aa3991438f190580607d7bbbd50ecc0c3}
+\index{Pile@{Pile}!depiler@{depiler}}
+\index{depiler@{depiler}!Pile@{Pile}}
+\subsubsection[{depiler}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Expression} $\ast$ Pile\-::depiler (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_pile_ab9b9c6abfb90f060a38bb53b9118ce4b}
+\index{Pile@{Pile}!depiler\-\_\-\-Aff@{depiler\-\_\-\-Aff}}
+\index{depiler\-\_\-\-Aff@{depiler\-\_\-\-Aff}!Pile@{Pile}}
+\subsubsection[{depiler\-\_\-\-Aff}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Pile\-::depiler\-\_\-\-Aff (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_pile_a2b1fb05097e51d7e332e957f0b5eab84}
+\index{Pile@{Pile}!drop@{drop}}
+\index{drop@{drop}!Pile@{Pile}}
+\subsubsection[{drop}]{\setlength{\rightskip}{0pt plus 5cm}void Pile\-::drop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_pile_a7488ed257c6ceb16ed57a9fffb0726d5}
+\index{Pile@{Pile}!dup@{dup}}
+\index{dup@{dup}!Pile@{Pile}}
+\subsubsection[{dup}]{\setlength{\rightskip}{0pt plus 5cm}void Pile\-::dup (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_pile_a081f7843d01cae1f0f7be7d92e46d5d2}
+\index{Pile@{Pile}!empiler@{empiler}}
+\index{empiler@{empiler}!Pile@{Pile}}
+\subsubsection[{empiler}]{\setlength{\rightskip}{0pt plus 5cm}void Pile\-::empiler (
+\begin{DoxyParamCaption}
+\item[{{\bf Expression} $\ast$}]{s}
+\end{DoxyParamCaption}
+)}\label{class_pile_ae557d09ac9527d0858821fa8a76847bc}
+\index{Pile@{Pile}!empiler\-\_\-\-Aff@{empiler\-\_\-\-Aff}}
+\index{empiler\-\_\-\-Aff@{empiler\-\_\-\-Aff}!Pile@{Pile}}
+\subsubsection[{empiler\-\_\-\-Aff}]{\setlength{\rightskip}{0pt plus 5cm}void Pile\-::empiler\-\_\-\-Aff (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{s}
+\end{DoxyParamCaption}
+)}\label{class_pile_a6c26a20b4e947f6ef70aeb346e55c9d3}
+\index{Pile@{Pile}!get\-\_\-m\-\_\-nombre\-Element@{get\-\_\-m\-\_\-nombre\-Element}}
+\index{get\-\_\-m\-\_\-nombre\-Element@{get\-\_\-m\-\_\-nombre\-Element}!Pile@{Pile}}
+\subsubsection[{get\-\_\-m\-\_\-nombre\-Element}]{\setlength{\rightskip}{0pt plus 5cm}int Pile\-::get\-\_\-m\-\_\-nombre\-Element (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\label{class_pile_ad390f27e14d4cda19d356dc4204b7e12}
+\index{Pile@{Pile}!get\-\_\-result@{get\-\_\-result}}
+\index{get\-\_\-result@{get\-\_\-result}!Pile@{Pile}}
+\subsubsection[{get\-\_\-result}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Pile\-::get\-\_\-result (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_pile_ae591cadce625ef96b61dbbb9e6358087}
+\index{Pile@{Pile}!get\-Aff@{get\-Aff}}
+\index{get\-Aff@{get\-Aff}!Pile@{Pile}}
+\subsubsection[{get\-Aff}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Stack$<$Q\-String$>$ Pile\-::get\-Aff (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_pile_a3bfeb0fac8bf9bcf2f08b2b83353b32a}
+\index{Pile@{Pile}!get\-Element@{get\-Element}}
+\index{get\-Element@{get\-Element}!Pile@{Pile}}
+\subsubsection[{get\-Element}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Stack$<${\bf Expression} $\ast$$>$ Pile\-::get\-Element (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_pile_ae1cce464d804eaf82dc6f588ceeafdbd}
+\index{Pile@{Pile}!mean@{mean}}
+\index{mean@{mean}!Pile@{Pile}}
+\subsubsection[{mean}]{\setlength{\rightskip}{0pt plus 5cm}void Pile\-::mean (
+\begin{DoxyParamCaption}
+\item[{int}]{x}
+\end{DoxyParamCaption}
+)}\label{class_pile_a1daebba5bd1d6c6d79de63728cc892a9}
+\index{Pile@{Pile}!retablir@{retablir}}
+\index{retablir@{retablir}!Pile@{Pile}}
+\subsubsection[{retablir}]{\setlength{\rightskip}{0pt plus 5cm}void Pile\-::retablir (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_pile_a36b0ff28bf644cebe2d336ebbb0a07ac}
+\index{Pile@{Pile}!set\-\_\-result@{set\-\_\-result}}
+\index{set\-\_\-result@{set\-\_\-result}!Pile@{Pile}}
+\subsubsection[{set\-\_\-result}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Pile\-::set\-\_\-result (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{s}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_pile_a2338a95c050d307fce0bf66f91c9a58b}
+\index{Pile@{Pile}!sum@{sum}}
+\index{sum@{sum}!Pile@{Pile}}
+\subsubsection[{sum}]{\setlength{\rightskip}{0pt plus 5cm}void Pile\-::sum (
+\begin{DoxyParamCaption}
+\item[{int}]{x}
+\end{DoxyParamCaption}
+)}\label{class_pile_ae09e2cf01c21b58a6c2c4efee101c158}
+\index{Pile@{Pile}!swap@{swap}}
+\index{swap@{swap}!Pile@{Pile}}
+\subsubsection[{swap}]{\setlength{\rightskip}{0pt plus 5cm}void Pile\-::swap (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)}\label{class_pile_a1a19ce2a4a6a76286fae8243a1f9e247}
+\index{Pile@{Pile}!traitement@{traitement}}
+\index{traitement@{traitement}!Pile@{Pile}}
+\subsubsection[{traitement}]{\setlength{\rightskip}{0pt plus 5cm}bool Pile\-::traitement (
+\begin{DoxyParamCaption}
+\item[{Q\-String}]{commande}
+\end{DoxyParamCaption}
+)}\label{class_pile_a615ef5113bbfc42def6429c803a385c7}
+
+
+\subsection{Member Data Documentation}
+\index{Pile@{Pile}!Afficheur@{Afficheur}}
+\index{Afficheur@{Afficheur}!Pile@{Pile}}
+\subsubsection[{Afficheur}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Stack$<$Q\-String$>$ Pile\-::\-Afficheur}\label{class_pile_ac5b403244fa24be19ce7066a3950dcc1}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+calculatrice/{\bf pile.\-h}\item 
+calculatrice/{\bf pile.\-cpp}\end{DoxyCompactItemize}
