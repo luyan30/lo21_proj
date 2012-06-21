@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon Jun 11 13:43:05 2012
+** Created: Thu 21. Jun 14:57:05 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -51,8 +51,6 @@ public:
     QHBoxLayout *horizontalLayout;
     QPushButton *mean;
     QPushButton *swap;
-    QPushButton *div;
-    QPushButton *fact;
     QPushButton *sum;
     QPushButton *confirmer;
     QLineEdit *Result;
@@ -83,10 +81,11 @@ public:
     QPushButton *retablir;
     QPushButton *SIGN;
     QPushButton *num0;
-    QPushButton *espace;
+    QPushButton *Space;
     QPushButton *slash;
     QPushButton *guillemet;
     QPushButton *point;
+    QPushButton *DIV;
     QGroupBox *Fonction_unaire;
     QWidget *gridLayoutWidget_2;
     QGridLayout *gridLayout_3;
@@ -177,8 +176,6 @@ public:
 
         sum = new QPushButton(horizontalLayoutWidget_2);
         sum->setObjectName(QString::fromUtf8("sum"));
-
-
 
         horizontalLayout->addWidget(sum);
 
@@ -285,11 +282,6 @@ public:
 
         gridLayout_2->addWidget(entrer, 9, 0, 1, 1);
 
-        fact = new QPushButton(gridLayoutWidget);
-        fact->setObjectName(QString::fromUtf8("fact"));
-
-        gridLayout_2->addWidget(fact, 10, 0, 1, 1);
-
         del = new QPushButton(gridLayoutWidget);
         del->setObjectName(QString::fromUtf8("del"));
 
@@ -325,10 +317,10 @@ public:
 
         gridLayout_2->addWidget(num0, 4, 0, 1, 1);
 
-        espace = new QPushButton(gridLayoutWidget);
-        espace->setObjectName(QString::fromUtf8("espace"));
+        Space = new QPushButton(gridLayoutWidget);
+        Space->setObjectName(QString::fromUtf8("Space"));
 
-        gridLayout_2->addWidget(espace, 4, 1, 1, 1);
+        gridLayout_2->addWidget(Space, 4, 1, 1, 1);
 
         slash = new QPushButton(gridLayoutWidget);
         slash->setObjectName(QString::fromUtf8("slash"));
@@ -345,10 +337,10 @@ public:
 
         gridLayout_2->addWidget(point, 8, 3, 1, 1);
 
-        div = new QPushButton(gridLayoutWidget);
-        div->setObjectName(QString::fromUtf8("div"));
+        DIV = new QPushButton(gridLayoutWidget);
+        DIV->setObjectName(QString::fromUtf8("DIV"));
 
-        gridLayout_2->addWidget(div, 4, 2, 1, 1);
+        gridLayout_2->addWidget(DIV, 4, 2, 1, 1);
 
         Fonction_unaire = new QGroupBox(centralWidget);
         Fonction_unaire->setObjectName(QString::fromUtf8("Fonction_unaire"));
@@ -430,7 +422,7 @@ public:
         MainWindow->setStatusBar(statusBar);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 805, 23));
+        menuBar->setGeometry(QRect(0, 0, 805, 18));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         menuHelp = new QMenu(menuBar);
@@ -463,7 +455,6 @@ public:
         mean->setText(QApplication::translate("MainWindow", "mean", 0, QApplication::UnicodeUTF8));
         swap->setText(QApplication::translate("MainWindow", "swap", 0, QApplication::UnicodeUTF8));
         sum->setText(QApplication::translate("MainWindow", "SUM", 0, QApplication::UnicodeUTF8));
-
         confirmer->setText(QApplication::translate("MainWindow", "Confirmer", 0, QApplication::UnicodeUTF8));
         result->setText(QApplication::translate("MainWindow", "Result\357\274\232", 0, QApplication::UnicodeUTF8));
         keyboard->setTitle(QString());
@@ -482,9 +473,7 @@ public:
         POW->setText(QApplication::translate("MainWindow", "POW", 0, QApplication::UnicodeUTF8));
         comma->setText(QApplication::translate("MainWindow", ",", 0, QApplication::UnicodeUTF8));
         eval->setText(QApplication::translate("MainWindow", "Eval", 0, QApplication::UnicodeUTF8));
-         div->setText(QApplication::translate("MainWindow", "div", 0, QApplication::UnicodeUTF8));
         entrer->setText(QApplication::translate("MainWindow", "entrer", 0, QApplication::UnicodeUTF8));
-        fact->setText(QApplication::translate("MainWindow", "fact", 0, QApplication::UnicodeUTF8));
         del->setText(QApplication::translate("MainWindow", "del", 0, QApplication::UnicodeUTF8));
         dollar->setText(QApplication::translate("MainWindow", "$", 0, QApplication::UnicodeUTF8));
         MOD->setText(QApplication::translate("MainWindow", "MOD", 0, QApplication::UnicodeUTF8));
@@ -492,10 +481,11 @@ public:
         retablir->setText(QApplication::translate("MainWindow", "retablir", 0, QApplication::UnicodeUTF8));
         SIGN->setText(QApplication::translate("MainWindow", "SIGN", 0, QApplication::UnicodeUTF8));
         num0->setText(QApplication::translate("MainWindow", "0", 0, QApplication::UnicodeUTF8));
-        espace->setText(QApplication::translate("MainWindow", "Space", 0, QApplication::UnicodeUTF8));
+        Space->setText(QApplication::translate("MainWindow", "espace", 0, QApplication::UnicodeUTF8));
         slash->setText(QApplication::translate("MainWindow", "/", 0, QApplication::UnicodeUTF8));
         guillemet->setText(QApplication::translate("MainWindow", "'", 0, QApplication::UnicodeUTF8));
         point->setText(QApplication::translate("MainWindow", ".", 0, QApplication::UnicodeUTF8));
+        DIV->setText(QApplication::translate("MainWindow", "div", 0, QApplication::UnicodeUTF8));
         Fonction_unaire->setTitle(QString());
         SIN->setText(QApplication::translate("MainWindow", "SIN", 0, QApplication::UnicodeUTF8));
         COS->setText(QApplication::translate("MainWindow", "COS", 0, QApplication::UnicodeUTF8));

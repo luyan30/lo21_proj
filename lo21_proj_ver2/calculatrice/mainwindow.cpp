@@ -2,9 +2,75 @@
 #include "ui_mainwindow.h"
 #include <QPushButton>
 
+void MainWindow::retablir(){
+
+
+QString s=historique->depiler_Aff();
+
+if (s.contains(QRegExp("^[0-9]+$"))||s.contains(QRegExp("\'"))){
+
+
+    ui->line_command->setText(s);
+
+    tempo->depiler();
+
+    tempo->depiler_Aff();
+
+  }
+
+else if (s.contains("+")||s.contains("*")||s.contains("-")){
+
+
+    ui->line_command->setText(s);
+
+    tempo->depiler();
+
+    tempo->depiler_Aff();
+
+    QString s1=historique->depiler_Aff();
+
+
+    qDebug()<<s1;
+
+    QString s2=historique->depiler_Aff();
+
+
+    qDebug()<<s2;
+
+    tempo->traitement(s1);
+
+    tempo->traitement(s2);
+
+}//ajouter d'autre operations binaire avec || dans le else if condition
+
+
+else if (s.contains("TAN")){
+
+
+    ui->line_command->setText(s);
+
+    tempo->depiler();
+
+    tempo->depiler_Aff();
+
+    QString s1=historique->depiler_Aff();
+
+
+    qDebug()<<s1;
+
+    tempo->traitement(s1);
+
+}//ajouter d'autre operations unaire avec || dans le else if condition
+
+
+MisePile();
+
+}
+
 void MainWindow::traitment()
 {
     QString tmp=ui->line_command->text();
+    historique->empiler_Aff(tmp);
     if (tempo->traitement(tmp))
     {
          annuler();
@@ -62,6 +128,7 @@ void MainWindow::operatorClicked()
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) // constructeur de mainwindow
 {
     tempo=new Pile(); // initialisation de tempo
+    historique=new Pile();
     ui->setupUi(this); // initialisation de ui
     connection(); // initialisation des connections signaux - slots
     ui->line_command->setText("0"); // initialisation de la ligne de commande
@@ -228,6 +295,7 @@ void MainWindow::connection()
     connect(ui->INV,SIGNAL(clicked()),this,SLOT(operatorClicked()));
     connect(ui->LN,SIGNAL(clicked()),this,SLOT(operatorClicked()));
     connect(ui->LOG,SIGNAL(clicked()),this,SLOT(operatorClicked()));
+    connect(ui->div,SIGNAL(clicked()),this,SLOT(operatorClicked()));
     connect(ui->eval,SIGNAL(clicked()),this,SLOT(evaluation()));
     connect(ui->clear,SIGNAL(clicked()),this,SLOT(pileCLear()));
     connect(ui->dup,SIGNAL(clicked()),this,SLOT(pileDup()));
@@ -236,7 +304,10 @@ void MainWindow::connection()
     connect(ui->mean,SIGNAL(clicked()),this,SLOT(pileMean()));
     connect(ui->swap,SIGNAL(clicked()),this,SLOT(pileSwap()));
     connect(ui->confirmer,SIGNAL(clicked()),this,SLOT(pileFonc()));
+    connect(ui->fact,SIGNAL(clicked()),this,SLOT(operatorClicked()));
+
     connect(ui->del,SIGNAL(clicked()),this,SLOT(backspaceClicked())); // ???
+    connect(ui->retablir,SIGNAL(clicked()),this,SLOT(retablir()));//nouveau
 }
 
 

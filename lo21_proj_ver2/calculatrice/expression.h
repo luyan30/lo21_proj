@@ -375,10 +375,13 @@ public:
 
     // METHODES REDEFINIES
     const Nombre& evaluer() const ;
+    Expression* evaluer2() ;
+     QString getResult()  { return this->evaluer2()->getPropriete(); }
     QString getPropriete() // va renvoyer un nombre ???
     {
-        return this->match_indice(this->getIndice());
+        return this->evaluer2()->getPropriete();
     }
+
 
    //Expression* evaluer()const;// ?
     //void afficher(std::ostream& f=std::cout) const ;

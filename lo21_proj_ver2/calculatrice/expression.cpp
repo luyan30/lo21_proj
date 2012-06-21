@@ -1308,57 +1308,66 @@ Expression* OperationBinaire::evaluer2() // à tester et à vérifier pour tous les
          return new Constant("'"+s1+" "+s2+" "+s+"'");
      }
 
-     Nombre* c= new Complexe(); // pointeur sur nombre qui sera initialise par le constructeur sans argument
-
+     Nombre* c= new Complexe();
+     // pour les additions, multiplications, divisions et soustractions on affichera toujours un complexe
      if (this->choix ==1) // on a choisi l'addition
          {
          (*c)= ex1->evaluer();
          (*c)= (*c) + (ex2->evaluer());
+         return c ;
          }
     // else throw ("operation non valide");
 
-     if (this->choix ==2) // on a choisi la soustraction
+    else if (this->choix ==2) // on a choisi la soustraction
          {
              (*c)= ex1->evaluer();
              (*c)= (*c) - (ex2->evaluer());
+              return c;
          }
 
-     if (this->choix ==3) // on a choisi la multiplication
+    else if (this->choix ==3) // on a choisi la multiplication
          {
              (*c)= ex1->evaluer();
              (*c)= (*c) * (ex2->evaluer());
+             return c;
          }
 
-     if (this->choix ==4) // on a choisi la division
+    else if (this->choix ==4) // on a choisi la division
          {
              (*c)= ex1->evaluer();
              (*c)= (*c) / (ex2->evaluer());
+             return c;
          }
-     if (this->choix ==5) // on a choisi pow
+    else if (this->choix ==5) // on a choisi pow
          {
-             Nombre* r= new Reel();
-             (*r)= ex1->evaluer();
-             (*r)= power(*c, (ex2->evaluer()));
-              Nombre* e =&(power(ex1->evaluer(), ex2->evaluer()));
-              *c = *e ;
+            Nombre* r= new Reel();
+            (*r)= ex1->evaluer();
+            (*r)= power(*r, (ex2->evaluer()));
+             // (*c)= power(*c, (ex2->evaluer()));
+           // Nombre* e =&(power(ex1->evaluer(), ex2->evaluer()));
+            //  *c = *e ;
 
 
-             // return e;
+            return r;
          }
-     if (this->choix ==6) // on a choisi mod
+     else if (this->choix ==6) // on a choisi mod
          {
              Nombre* e = new Entier();
-             (*e) = (modulo(ex1->evaluer(), ex2->evaluer()));
+             (*e)= ex1->evaluer();
+             (*e) = (modulo(*e, ex2->evaluer()));
              return e;
          }
-
-     if (c->match_affiche()==1) // ???
+     else
+         throw("operation non valide");
+ }
+   // return c;
+    /* if (c->match_affiche()==1) // ???
      {
         return new Reel(c->getPartieReelle());
      }
     else
-        return c;
- }
+        return c;*/ // on affichera toujours un complexe , meme si sa partie reelle est nulle
+ //}
 
 
 const Nombre& OperationUnaire::evaluer() const
@@ -1434,6 +1443,83 @@ const Nombre& OperationUnaire::evaluer() const
             {
                 Nombre* e = &(factoriel(ex1->evaluer()));
                 return *e;
+            }
+         else throw("operation non geree" ) ;
+}
+
+Expression*  OperationUnaire::evaluer2()
+{
+    if (this->choix ==7) // on a choisi inversion signe
+            {
+                //Nombre* e = new Complexe();// ???
+                Nombre* e = &(inversionSigne(ex1->evaluer())); // on initialise le pointeur avec l'adresse d'un nombre
+                return e;
+            }
+         else if (this->choix ==8) // on a choisi sinus
+            {
+                // e = new Reel();// ???
+                Nombre* e = &(sinus(ex1->evaluer()));
+                return e;
+            }
+         else if (this->choix ==9) // on a choisi cosinus
+            {
+                Nombre* e = &(cosinus(ex1->evaluer()));
+                return e;
+            }
+         else if (this->choix ==10) // on a choisi tangente
+            {
+                Nombre* e =&(tangente(ex1->evaluer()));
+                return e;
+            }
+         else if (this->choix ==11) // on a choisi sinusHyperbolique
+            {
+                Nombre* e = &(sinusHyperbolique(ex1->evaluer()));
+                return e;
+            }
+         else if (this->choix ==12) // on a choisi cosinusHyperbolique
+            {
+                Nombre* e = &(cosinusHyperbolique(ex1->evaluer()));
+                return e;
+            }
+         else if (this->choix ==13) // on a choisi tangenteHyperbolique
+            {
+                Nombre* e = &(tangenteHyperbolique(ex1->evaluer()));
+                return e;
+            }
+         else if (this->choix ==14) // on a choisi logarithme népérien (log)
+            {
+                Nombre* e = &(logarithme(ex1->evaluer()));
+                return e;
+            }
+         else if (this->choix ==15) // on a choisi logarithme décimal (log à base 10)
+            {
+                Nombre* e = &(logarithme10(ex1->evaluer()));
+                return e;
+            }
+         else if (this->choix ==16) // on a choisi inverse
+            {
+                Nombre* e = &(inverse(ex1->evaluer()));
+                return e;
+            }
+         else if (this->choix ==17) // on a choisi racineCarree
+            {
+                Nombre* e = &(racineCarree(ex1->evaluer()));
+                return e;
+            }
+         else if (this->choix ==18) // on a choisi fonctionCarree
+            {
+                Nombre* e = &(fonctionCarree(ex1->evaluer()));
+                return e;
+            }
+         else if (this->choix ==19) // on a choisi fonctionCube
+            {
+                Nombre* e = &(fonctionCube(ex1->evaluer()));
+                return e;
+            }
+         else if (this->choix ==20) // on a choisi factoriel
+            {
+                Nombre* e = &(factoriel(ex1->evaluer()));
+                return e;
             }
          else throw("operation non geree" ) ;
 }

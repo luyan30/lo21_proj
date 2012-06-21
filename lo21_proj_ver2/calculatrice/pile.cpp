@@ -181,7 +181,7 @@ bool Pile::traitement(QString commande) // algo la plus difficile !
               Afficheur.push(op->getResult());
           }
 
-          else if(list[i].contains("/"))
+          else if(list[i].contains("div"))
           {
               OperationBinaire *op=new OperationBinaire(Element.pop(),Element.pop(),4);
               Afficheur.pop();
@@ -209,7 +209,7 @@ bool Pile::traitement(QString commande) // algo la plus difficile !
             //  delete ex2;
           }
 
-          else if(list[i] =="POW")
+          else if(list[i].contains(QRegExp("(POW)")))
           {
               Expression* ex1 = Element.pop(); // 1ere expression depilee
               Expression* ex2 = Element.pop(); // 2eme expression depilee
@@ -249,14 +249,127 @@ bool Pile::traitement(QString commande) // algo la plus difficile !
               Element.push( op->evaluer2());
               Afficheur.push(op->getResult());
           }
+          else if(list[i].contains(QRegExp("(SIGN)")))// inversion signe: choix 7
+          {
+              OperationUnaire *op=new OperationUnaire(Element.pop(),7);
+              Afficheur.pop();
+              //Afficheur.pop();
+              Element.push( op->evaluer2());
+              Afficheur.push(op->getResult());
+          }
+          else if(list[i].contains(QRegExp("(SIN)")))// inversion signe: choix 7
+          {
+              OperationUnaire *op=new OperationUnaire(Element.pop(),8);
+              Afficheur.pop();
+              //Afficheur.pop();
+              Element.push( op->evaluer2());
+              Afficheur.push(op->getResult());
+          }
+          else if(list[i].contains(QRegExp("(COS)")))// inversion signe: choix 7
+          {
+              OperationUnaire *op=new OperationUnaire(Element.pop(),9);
+              Afficheur.pop();
+              //Afficheur.pop();
+              Element.push( op->evaluer2());
+              Afficheur.push(op->getResult());
+          }
+          else if(list[i].contains(QRegExp("(TAN)")))// inversion signe: choix 7
+          {
+              OperationUnaire *op=new OperationUnaire(Element.pop(),10);
+              Afficheur.pop();
+              //Afficheur.pop();
+              Element.push( op->evaluer2());
+              Afficheur.push(op->getResult());
+          }
+          else if(list[i].contains(QRegExp("(SINH)")))// inversion signe: choix 7
+          {
+              OperationUnaire *op=new OperationUnaire(Element.pop(),11);
+              Afficheur.pop();
+              //Afficheur.pop();
+              Element.push( op->evaluer2());
+              Afficheur.push(op->getResult());
+          }
+          else if(list[i].contains(QRegExp("(COSH)")))// inversion signe: choix 7
+          {
+              OperationUnaire *op=new OperationUnaire(Element.pop(),12);
+              Afficheur.pop();
+              //Afficheur.pop();
+              Element.push( op->evaluer2());
+              Afficheur.push(op->getResult());
+          }
+          else if(list[i].contains(QRegExp("(TANH)")))// inversion signe: choix 7
+          {
+              OperationUnaire *op=new OperationUnaire(Element.pop(),13);
+              Afficheur.pop();
+              //Afficheur.pop();
+              Element.push( op->evaluer2());
+              Afficheur.push(op->getResult());
+          }
+
+          else if(list[i].contains(QRegExp("(LN)")))// inversion signe: choix 7
+          {
+              OperationUnaire *op=new OperationUnaire(Element.pop(),14);
+              Afficheur.pop();
+              //Afficheur.pop();
+              Element.push( op->evaluer2());
+              Afficheur.push(op->getResult());
+          }
+          else if(list[i].contains(QRegExp("(LOG)")))// inversion signe: choix 7
+          {
+              OperationUnaire *op=new OperationUnaire(Element.pop(),15);
+              Afficheur.pop();
+              //Afficheur.pop();
+              Element.push( op->evaluer2());
+              Afficheur.push(op->getResult());
+          }
+          else if(list[i].contains(QRegExp("(INV)")))// inversion signe: choix 7
+          {
+              OperationUnaire *op=new OperationUnaire(Element.pop(),16);
+              Afficheur.pop();
+              //Afficheur.pop();
+              Element.push( op->evaluer2());
+              Afficheur.push(op->getResult());
+          }
+          else if(list[i].contains(QRegExp("(SQRT)")))// inversion signe: choix 7
+          {
+              OperationUnaire *op=new OperationUnaire(Element.pop(),17);
+              Afficheur.pop();
+              //Afficheur.pop();
+              Element.push( op->evaluer2());
+              Afficheur.push(op->getResult());
+          }
+          else if(list[i].contains(QRegExp("(SQR)")))// inversion signe: choix 7
+          {
+              OperationUnaire *op=new OperationUnaire(Element.pop(),18);
+              Afficheur.pop();
+              //Afficheur.pop();
+              Element.push( op->evaluer2());
+              Afficheur.push(op->getResult());
+          }
+          else if(list[i].contains(QRegExp("(CUBE)")))// inversion signe: choix 7
+          {
+              OperationUnaire *op=new OperationUnaire(Element.pop(),19);
+              Afficheur.pop();
+              //Afficheur.pop();
+              Element.push( op->evaluer2());
+              Afficheur.push(op->getResult());
+          }
+          else if(list[i].contains(QRegExp("(fact)")))// inversion signe: choix 7
+          {
+              OperationUnaire *op=new OperationUnaire(Element.pop(),20);
+              Afficheur.pop();
+              //Afficheur.pop();
+              Element.push( op->evaluer2());
+              Afficheur.push(op->getResult());
+          }
 
          else
           {
-              QLabel msg;
-              msg.setText("Erreur inconnue");
-              msg.show();
+              //QLabel msg;
+             // msg.setText("Erreur inconnue");
+             // msg.show();
               //qDebug() << QString(" Erreur : on a une erreur dans l'algorithme")  ;
-              //throw("erreur: le traitement n'a pas marché");
+              throw("erreur: le traitement n'a pas marché");
               return false;
           }
 

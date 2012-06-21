@@ -41,6 +41,7 @@ private slots:
     void pileSwap();
     void pileFonc();
     void backspaceClicked(); // slot espace cliqué
+     void retablir();
    // void ddd();
 };
 
